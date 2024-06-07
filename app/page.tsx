@@ -3,8 +3,7 @@ import HomePage from './home/HomePage';
 
 export const metadata = generateMetadata({
   title: 'basemail',
-  description:
-    'Own your email with basemail.',
+  description: 'Own your email with basemail.',
   images: 'themes.png',
   pathname: '',
 });

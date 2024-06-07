@@ -1,11 +1,11 @@
 'use client';
-import { useAccount, useSignMessage } from 'wagmi';
-import Footer from '@/components/layout/footer/Footer';
-import Header from '@/components/layout/header/Header';
-import AccountConnect from '@/components/layout/header/AccountConnect';
+// import { zeroAddress } from 'viem';
+import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
-import { useSIWE } from '@/hooks/useSIWE';
-import { zeroAddress } from 'viem';
+import Footer from '@/components/layout/footer/Footer';
+import AccountConnect from '@/components/layout/header/AccountConnect';
+import Header from '@/components/layout/header/Header';
+// import { useSIWE } from '@/hooks/useSIWE';
 
 /**
  * Use the page component to wrap the components
@@ -25,21 +25,30 @@ export default function HomePage() {
       <Header />
       <main className="container mx-auto px-8 py-16">
         {account.isConnected ? (
-        <div className="flex flex-col items-center">
-          <h1 className="text-4xl bold">b m</h1>
-          <br />
-          <Button buttonContent={<h2 className="text-lg">Login</h2>} className="w-40 my-8" onClick={onLogin} />
-          <p className="text-center w-48">Login with your smart wallet to authenticate with the offchain mail service.</p>
-        </div>) : (
-        <div className="flex flex-col items-center">
-          <h1 className="text-4xl bold">b m</h1>
-          <br />
-          <p className="text-center w-48 py-4">
-            To use this application, you need a Smart Wallet.
-          </p>
-          <p className="text-center w-48 pb-4">Connect your existing one or create one by clicking Connect Wallet.</p>
-          <AccountConnect />
-        </div>
+          <div className="flex flex-col items-center">
+            <h1 className="bold text-4xl">b m</h1>
+            <br />
+            <Button
+              buttonContent={<h2 className="text-lg">Login</h2>}
+              className="my-8 w-40"
+              onClick={onLogin}
+            />
+            <p className="w-48 text-center">
+              Login with your smart wallet to authenticate with the offchain mail service.
+            </p>
+          </div>
+        ) : (
+          <div className="flex flex-col items-center">
+            <h1 className="bold text-4xl">b m</h1>
+            <br />
+            <p className="w-48 py-4 text-center">
+              To use this application, you need a Smart Wallet.
+            </p>
+            <p className="w-48 pb-4 text-center">
+              Connect your existing one or create one by clicking Connect Wallet.
+            </p>
+            <AccountConnect />
+          </div>
         )}
       </main>
       <Footer />

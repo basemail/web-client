@@ -13,7 +13,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  manifest: '/manifest.json'
+  manifest: '/manifest.json',
 };
 
 // Stat analytics before the App renders,
@@ -27,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.className}`}>
       <body className="flex flex-1 flex-col">
-          <Providers>{children}</Providers>
+        <Providers>{children}</Providers>
       </body>
       <GoogleAnalytics />
     </html>
