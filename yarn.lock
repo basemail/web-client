@@ -2560,7 +2560,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@noble/hashes@npm:1.4.0, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.3.1":
+"@noble/hashes@npm:1.4.0, @noble/hashes@npm:^1.1.2, @noble/hashes@npm:^1.3.0, @noble/hashes@npm:^1.3.1":
   version: 1.4.0
   resolution: "@noble/hashes@npm:1.4.0"
   checksum: 10c0/8c3f005ee72e7b8f9cff756dfae1241485187254e3f743873e22073d63906863df5d4f13d441b7530ea614b7a093f0d889309f28b59850f33b66cb26a779a4a5
@@ -3627,6 +3627,18 @@ __metadata:
   version: 0.17.0
   resolution: "@solidity-parser/parser@npm:0.17.0"
   checksum: 10c0/de606abd2f603b8056828c772de3f26b0d92913d0e8ebe4f2c149485f548e1b7af308c54c569542b3fc8e03d3219a9fb0a318f56b92b3042074c8074c1da53f2
+  languageName: node
+  linkType: hard
+
+"@spruceid/siwe-parser@npm:^2.1.2":
+  version: 2.1.2
+  resolution: "@spruceid/siwe-parser@npm:2.1.2"
+  dependencies:
+    "@noble/hashes": "npm:^1.1.2"
+    apg-js: "npm:^4.3.0"
+    uri-js: "npm:^4.4.1"
+    valid-url: "npm:^1.0.9"
+  checksum: 10c0/79005ae8978b9dd0c1ece949dbc2294d6a641db757c14ae0864b6803358cc498bac882d8031e656b4dbf3e838be043ce6517c857b6e2df26a1e8922baeb2c07d
   languageName: node
   linkType: hard
 
@@ -5257,6 +5269,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"apg-js@npm:^4.3.0":
+  version: 4.4.0
+  resolution: "apg-js@npm:4.4.0"
+  checksum: 10c0/b3e60e2ba8b25fe1c9fcc648f43b98f02f0eff3bbd593fd2866302fe57b1b7840ee9be894ebed6214876a6feecd543cc717d7b68351bf2df831db110ae01e6bb
+  languageName: node
+  linkType: hard
+
 "arg@npm:^5.0.2":
   version: 5.0.2
   resolution: "arg@npm:5.0.2"
@@ -5773,6 +5792,7 @@ __metadata:
     net: "npm:^1.0.2"
     next: "npm:13.5.6"
     next-pwa: "npm:5.6.0"
+    oidc-react: "npm:^3.2.2"
     perfume.js: "npm:9.2.0"
     permissionless: "npm:0.1.26"
     pino-pretty: "npm:^10.3.1"
@@ -5790,6 +5810,7 @@ __metadata:
     scroll-into-view-if-needed: "npm:^3.1.0"
     shikiji: "npm:^0.9.17"
     shikiji-core: "npm:^0.9.17"
+    siwe: "npm:^2.3.2"
     stylelint: "npm:^16.0.2"
     stylelint-config-idiomatic-order: "npm:^10.0.0"
     stylelint-config-standard: "npm:^35.0.0"
@@ -6498,6 +6519,13 @@ __metadata:
     uWebSockets.js:
       optional: true
   checksum: 10c0/b950c64d36f3f11fdb8e0faf3107598660d89d77eb860e68b535fe6acba9f0f2f0507cc7250bd219a3ef2fe08718db91b591e6912b7324fcfc8fd1b8d9f78c96
+  languageName: node
+  linkType: hard
+
+"crypto-js@npm:^4.1.1":
+  version: 4.2.0
+  resolution: "crypto-js@npm:4.2.0"
+  checksum: 10c0/8fbdf9d56f47aea0794ab87b0eb9833baf80b01a7c5c1b0edc7faf25f662fb69ab18dc2199e2afcac54670ff0cd9607a9045a3f7a80336cccd18d77a55b9fdf0
   languageName: node
   linkType: hard
 
@@ -10408,6 +10436,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jwt-decode@npm:^3.1.2":
+  version: 3.1.2
+  resolution: "jwt-decode@npm:3.1.2"
+  checksum: 10c0/a951547946b5e8b1d9df818152d6b1dbaf13eebb3a6e6daceedf888968f5d255959852c8188aae2c825dc9104a99d25cb6c23f25d76545d1aa0315b968b6912e
+  languageName: node
+  linkType: hard
+
 "keccak@npm:^3.0.3":
   version: 3.0.4
   resolution: "keccak@npm:3.0.4"
@@ -11797,6 +11832,28 @@ __metadata:
   version: 1.1.3
   resolution: "ohash@npm:1.1.3"
   checksum: 10c0/928f5bdbd8cd73f90cf544c0533dbda8e0a42d9b8c7454ab89e64e4d11bc85f85242830b4e107426ce13dc4dd3013286f8f5e0c84abd8942a014b907d9692540
+  languageName: node
+  linkType: hard
+
+"oidc-client-ts@npm:2.2.4":
+  version: 2.2.4
+  resolution: "oidc-client-ts@npm:2.2.4"
+  dependencies:
+    crypto-js: "npm:^4.1.1"
+    jwt-decode: "npm:^3.1.2"
+  checksum: 10c0/eb7fb8fbe28f8aaff4789edbd9400dee6c06438c21d541b0fcd3b8837a5f4c895b8714eb77c8ae38661df083a1bc73331c0cd25c9f7ad3e0312c93bc8868da49
+  languageName: node
+  linkType: hard
+
+"oidc-react@npm:^3.2.2":
+  version: 3.2.2
+  resolution: "oidc-react@npm:3.2.2"
+  dependencies:
+    oidc-client-ts: "npm:2.2.4"
+  peerDependencies:
+    react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    react-dom: ^16.8.0 || || ^17.0.0 ||  ^18.0.0
+  checksum: 10c0/15fe0f439513e35ec19d177548064b93d2ab7934be7f8ed28e2b5b80e31a88a90f0ab0b2f5ec9f70f712366e897aaeb88e493e84f902fce91ae4c4c5ad1c0d3c
   languageName: node
   linkType: hard
 
@@ -13514,6 +13571,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"siwe@npm:^2.3.2":
+  version: 2.3.2
+  resolution: "siwe@npm:2.3.2"
+  dependencies:
+    "@spruceid/siwe-parser": "npm:^2.1.2"
+    "@stablelib/random": "npm:^1.0.1"
+    uri-js: "npm:^4.4.1"
+    valid-url: "npm:^1.0.9"
+  peerDependencies:
+    ethers: ^5.6.8 || ^6.0.8
+  checksum: 10c0/05ee09cdabef72a8ec54ffe24e517c386eb49bb6385ffc7ec159e266b3661a98405ca88b8e75278b376754e943a5118790c2add98b5012e1c4ec13bce4e6ee03
+  languageName: node
+  linkType: hard
+
 "slash@npm:^3.0.0":
   version: 3.0.0
   resolution: "slash@npm:3.0.0"
@@ -14895,7 +14966,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"uri-js@npm:^4.2.2":
+"uri-js@npm:^4.2.2, uri-js@npm:^4.4.1":
   version: 4.4.1
   resolution: "uri-js@npm:4.4.1"
   dependencies:
@@ -15010,6 +15081,13 @@ __metadata:
     "@types/istanbul-lib-coverage": "npm:^2.0.1"
     convert-source-map: "npm:^2.0.0"
   checksum: 10c0/e691ba4dd0dea4a884e52c37dbda30cce6f9eeafe9b26721e449429c6bb0f4b6d1e33fabe7711d0f67f7a34c3bfd56c873f7375bba0b1534e6a2843ce99550e5
+  languageName: node
+  linkType: hard
+
+"valid-url@npm:^1.0.9":
+  version: 1.0.9
+  resolution: "valid-url@npm:1.0.9"
+  checksum: 10c0/3995e65f9942dbcb1621754c0f9790335cec61e9e9310c0a809e9ae0e2ae91bb7fc6a471fba788e979db0418d9806639f681ecebacc869bc8c3de88efa562ee6
   languageName: node
   linkType: hard
 

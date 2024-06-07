@@ -1,7 +1,8 @@
 import './global.css';
 
 import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
-import OnchainProviders from '@/OnchainProviders';
+import Providers from '@/Providers';
+
 import { initAnalytics } from '@/utils/analytics';
 import { inter } from './fonts';
 import type { Metadata } from 'next';
@@ -12,10 +13,7 @@ export const viewport = {
 };
 
 export const metadata: Metadata = {
-  manifest: '/manifest.json',
-  other: {
-    boat: '0.17.0',
-  },
+  manifest: '/manifest.json'
 };
 
 // Stat analytics before the App renders,
@@ -29,7 +27,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.className}`}>
       <body className="flex flex-1 flex-col">
-        <OnchainProviders>{children}</OnchainProviders>
+          <Providers>{children}</Providers>
       </body>
       <GoogleAnalytics />
     </html>

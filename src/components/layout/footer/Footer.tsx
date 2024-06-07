@@ -20,9 +20,9 @@ export default function Footer() {
                 passHref
                 className="font-robotoMono text-center text-xl font-medium text-white no-underline"
               >
-                BUILD ONCHAIN APPS
+                BASEMAIL
               </NextLink>
-              <NavbarLink href="https://github.com/coinbase/build-onchain-apps" target="_blank">
+              <NavbarLink href="https://github.com/basemail" target="_blank">
                 <GitHubLogoIcon
                   width="24"
                   height="24"
@@ -31,7 +31,7 @@ export default function Footer() {
               </NavbarLink>
             </div>
 
-            <div className="mt-8 flex flex-col items-center justify-center">
+            {/* <div className="mt-8 flex flex-col items-center justify-center">
               <p className="text-base font-normal leading-7 text-boat-footer-light-gray">
                 This project is licensed under the MIT License - see the{' '}
                 <NextLink
@@ -43,10 +43,10 @@ export default function Footer() {
                 </NextLink>{' '}
                 file for details
               </p>
-            </div>
+            </div> */}
           </div>
 
-          <div className="font-robotoMono flex flex-col items-start justify-center gap-4 text-center text-xl font-medium text-white">
+          {/* <div className="font-robotoMono flex flex-col items-start justify-center gap-4 text-center text-xl font-medium text-white">
             EXPERIENCES
             <NavbarLink href="/buy-me-coffee">
               <span className="flex items-center gap-1 px-2">
@@ -63,7 +63,7 @@ export default function Footer() {
                 Paymaster Bundler <ArrowTopRightIcon width="16" height="16" />
               </span>
             </NavbarLink>
-          </div>
+          </div> */}
         </div>
       </div>
     </footer>

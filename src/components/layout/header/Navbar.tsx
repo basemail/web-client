@@ -40,7 +40,7 @@ export function NavbarTitle() {
         className="font-robotoMono text-center text-xl font-medium text-white no-underline"
         aria-label="build-onchain-apps Github repository"
       >
-        BUILD ONCHAIN APPS
+        BASEMAIL
       </NextLink>
     </div>
   );
@@ -59,7 +59,7 @@ function Navbar() {
         <div className="flex items-center justify-start gap-8">
           <ul className="hidden items-center justify-start gap-8 md:flex">
             <li className="flex">
-              <NavbarLink href="https://github.com/coinbase/build-onchain-apps" target="_blank">
+              <NavbarLink href="https://github.com/basemail" target="_blank">
                 <GitHubLogoIcon
                   width="24"
                   height="24"
@@ -68,15 +68,15 @@ function Navbar() {
               </NavbarLink>
             </li>
             <li className="flex">
-              <NavbarLink href="/#get-started">Get Started</NavbarLink>
+              <NavbarLink href="/#get-started">Docs</NavbarLink>
             </li>
-            <li className="flex">
+            {/* <li className="flex">
               <NavigationMenu.Root className="relative">
                 <NavigationMenu.List className={clsx('flex flex-row space-x-2')}>
                   <NavigationMenu.Item>
                     <NavigationMenu.Trigger className="group flex h-16 items-center justify-start gap-1">
                       <span className="font-robotoMono text-center text-base font-normal text-white">
-                        Experiences
+                        Account Actions
                       </span>
                       <ChevronDownIcon
                         className="transform transition duration-200 ease-in-out group-data-[state=open]:rotate-180"
@@ -101,7 +101,7 @@ function Navbar() {
                   )}
                 />
               </NavigationMenu.Root>
-            </li>
+            </li> */}
           </ul>
           <AccountConnect />
         </div>
