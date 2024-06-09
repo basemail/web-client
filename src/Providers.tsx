@@ -5,15 +5,11 @@ import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, AuthProviderProps } from 'oidc-react';
 import { baseSepolia } from 'viem/chains';
-import { WagmiProvider } from 'wagmi';
+import { useAccount, WagmiProvider } from 'wagmi';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
 
 // TODO control with environment variables
-const oidcConfig: AuthProviderProps = {
-  authority: 'https://siwe-oidc-production.up.railway.app',
-  clientId: 'TODO-get-a-client-id',
-  redirectUri: 'http://localhost:3000',
-};
+
 
 type Props = { children: ReactNode };
 
@@ -25,14 +21,40 @@ const wagmiConfig = createWagmiConfig(rpcUrl);
 
 function OnchainProviders({ children }: Props) {
   return (
+    <WagmiProvider config={wagmiConfig}>
+      <QueryClientProvider client={queryClient}>
+        <OnchainKitProvider chain={baseSepolia}>{children}</OnchainKitProvider>
+      </QueryClientProvider>
+    </WagmiProvider>
+  );
+}
+
+function SiweProvider({ children }: Props) {
+
+  const account = useAccount();
+
+  const oidcConfig: AuthProviderProps = {
+    authority: 'https://siwe-oidc-production.up.railway.app',
+    clientId: 'TODO-get-a-client-id',
+    redirectUri: 'http://localhost:3000',
+    autoSignIn: account.isConnected,
+  };
+
+  return (
     <AuthProvider {...oidcConfig}>
-      <WagmiProvider config={wagmiConfig}>
-        <QueryClientProvider client={queryClient}>
-          <OnchainKitProvider chain={baseSepolia}>{children}</OnchainKitProvider>
-        </QueryClientProvider>
-      </WagmiProvider>
+      {children}
     </AuthProvider>
   );
 }
 
-export default OnchainProviders;
+function Providers({ children }: Props) {
+  return (
+    <OnchainProviders>
+      <SiweProvider>
+        {children}
+      </SiweProvider>
+    </OnchainProviders>
+  );
+}
+
+export default Providers;
