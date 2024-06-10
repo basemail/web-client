@@ -2,12 +2,12 @@
 
 import { ReactNode } from 'react';
 import { OnchainKitProvider } from '@coinbase/onchainkit';
+import { Theme } from '@radix-ui/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { AuthProvider, AuthProviderProps } from 'oidc-react';
 import { baseSepolia } from 'viem/chains';
 import { useAccount, WagmiProvider } from 'wagmi';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
-
 // TODO control with environment variables
 
 
@@ -49,11 +49,13 @@ function SiweProvider({ children }: Props) {
 
 function Providers({ children }: Props) {
   return (
-    <OnchainProviders>
-      <SiweProvider>
-        {children}
-      </SiweProvider>
-    </OnchainProviders>
+    <Theme>
+      <OnchainProviders>
+        <SiweProvider>
+          {children}
+        </SiweProvider>
+      </OnchainProviders>
+    </Theme>
   );
 }
 

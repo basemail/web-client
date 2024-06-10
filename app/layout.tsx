@@ -1,5 +1,5 @@
 import './global.css';
-
+import '@radix-ui/themes/styles.css';
 import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import Providers from '@/Providers';
 
