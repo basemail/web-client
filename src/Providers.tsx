@@ -49,7 +49,9 @@ function SiweProvider({ children }: Props) {
 
 function Providers({ children }: Props) {
   return (
-    <Theme>
+    <Theme
+      appearance='dark'
+      >
       <OnchainProviders>
         <SiweProvider>
           {children}
