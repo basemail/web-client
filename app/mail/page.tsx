@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import {InboxSolid, ArchiveBox, Trash, FolderOpen} from '@medusajs/icons';
+import { InboxSolid, ArchiveBox, Trash, FolderOpen } from '@medusajs/icons';
 import {
   PaperPlaneIcon,
   MagnifyingGlassIcon
@@ -12,7 +12,7 @@ const folders = [
   { label: 'Inbox', icon: <InboxSolid /> },
   { label: 'Saved', icon: <ArchiveBox /> },
   { label: 'Drafts', icon: <FolderOpen /> },
-  { label: 'Sent', icon: <PaperPlaneIcon className='w-5 h-4'/> },
+  { label: 'Sent', icon: <PaperPlaneIcon className='w-5 h-4' /> },
   { label: 'Trash', icon: <Trash /> }
 ];
 
@@ -49,11 +49,10 @@ const mockEmail = {
 
 export default function BaseMail() {
   return (
-    <>
-      <Header />
-      <main className="container mx-auto px-8 py-16 h-full">
-        <Grid columns="4" gap="3" width="auto" className="h-full">
-          <Box id="mail-boxes">
+
+    <main className="container mx-auto px-8 py-16 h-full">
+      <Grid columns="4" gap="3" width="auto" className="h-full">
+        <Box id="mail-boxes">
           <TextField.Root placeholder="Search folders…">
             <TextField.Slot>
               <MagnifyingGlassIcon height="16" width="16" />
@@ -64,13 +63,13 @@ export default function BaseMail() {
               <Button variant='ghost' size='2' color='gray' key={label} >
                 {icon}
                 <Text className='w-full flex justify-start'>
-                {label}
+                  {label}
                 </Text>
               </Button>
             ))}
-            </Flex>
-          </Box>
-          <Box id="mails" style={{ gridColumn: 'span 3' }}>
+          </Flex>
+        </Box>
+        <Box id="mails" style={{ gridColumn: 'span 3' }}>
           <Box className='w-full'>
             <Flex className='flex-row w-fit'>
               <Flex gap="3" align="center">
@@ -78,7 +77,7 @@ export default function BaseMail() {
                   size="3"
                   src={mockEmail.senderAvatar}
                   radius="full"
-                  fallback={mockEmail.senderName.substring(0,1).toUpperCase()}
+                  fallback={mockEmail.senderName.substring(0, 1).toUpperCase()}
                 />
                 <Box>
                   <Text as="div" size="2" weight="regular">
@@ -86,19 +85,18 @@ export default function BaseMail() {
                   </Text>
                 </Box>
                 <Box>
-                <Text as="div" size="2" truncate className='max-w-prose text-white font-medium'>
-                  {mockEmail.subject}
-                </Text>
-                <Text as="div" size="2" color="gray" truncate className='max-w-prose'>
-                  {mockEmail.content}
-                </Text>
+                  <Text as="div" size="2" truncate className='max-w-prose text-white font-medium'>
+                    {mockEmail.subject}
+                  </Text>
+                  <Text as="div" size="2" color="gray" truncate className='max-w-prose'>
+                    {mockEmail.content}
+                  </Text>
                 </Box>
               </Flex>
             </Flex>
           </Box>
-          </Box>
-        </Grid>
-      </main>
-    </>
+        </Box>
+      </Grid>
+    </main>
   );
 }
