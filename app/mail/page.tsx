@@ -3,10 +3,10 @@ import React from 'react';
 import { InboxSolid, ArchiveBox, Trash, FolderOpen } from '@medusajs/icons';
 import {
   PaperPlaneIcon,
-  MagnifyingGlassIcon
+  MagnifyingGlassIcon,
 } from '@radix-ui/react-icons';
-import { Grid, Box, Text, TextField, Button, Flex, Card, Avatar } from "@radix-ui/themes";
-import Header from "@/components/layout/header/Header";
+import { Grid, Box, Text, TextField, Button, Flex, Avatar } from "@radix-ui/themes";
+import Image from 'next/image';
 
 const folders = [
   { label: 'Inbox', icon: <InboxSolid /> },
@@ -50,53 +50,63 @@ const mockEmail = {
 export default function BaseMail() {
   return (
 
-    <main className="container mx-auto px-8 py-16 h-full">
-      <Grid columns="4" gap="3" width="auto" className="h-full">
-        <Box id="mail-boxes">
-          <TextField.Root placeholder="Search folders…">
+    <Grid columns="10" gap="3" width="auto" className="h-full">
+      <Box id="mail-boxes" style={{ gridColumn: 'span 1' }}>
+        <Flex align="center" gap="3" p="4" className='hover:cursor-pointer hover:bg-gray-900'>
+          <Image
+            src='/icons/48x48.png'
+            width={32}
+            height={32}
+            alt="logo" />
+          <Text size="6" weight="bold">
+            Basemail
+          </Text>
+        </Flex>
+
+        <Flex className='flex-col gap-3 m-4 mt-5'>
+          {folders.map(({ icon, label }) => (
+            <Button variant='ghost' size='3' color='gray' key={label} >
+              {icon}
+              <Text className='w-full flex justify-start'>
+                {label}
+              </Text>
+            </Button>
+          ))}
+        </Flex>
+      </Box>
+      <Box id="mails" style={{ gridColumn: 'span 9' }} >
+        <Box p="2">
+          <TextField.Root placeholder="Search folders…" size="3">
             <TextField.Slot>
               <MagnifyingGlassIcon height="16" width="16" />
             </TextField.Slot>
           </TextField.Root>
-          <Flex className='flex-col gap-3 m-4 mt-5'>
-            {folders.map(({ icon, label }) => (
-              <Button variant='ghost' size='2' color='gray' key={label} >
-                {icon}
-                <Text className='w-full flex justify-start'>
-                  {label}
-                </Text>
-              </Button>
-            ))}
+        </Box>
+        <Flex width="full" gap="3" align="center" p="2" className='hover:bg-gray-900'>
+          <Flex gap="3" align="center">
+            <Avatar
+              size="2"
+              src={mockEmail.senderAvatar}
+              highContrast
+              fallback={mockEmail.senderName.substring(0, 1).toUpperCase()}
+            />
+
+            <Text as="div" size="2" weight="regular">
+              {mockEmail.senderName || mockEmail.senderEmail}
+            </Text>
+
           </Flex>
-        </Box>
-        <Box id="mails" style={{ gridColumn: 'span 3' }}>
-          <Box className='w-full'>
-            <Flex className='flex-row w-fit'>
-              <Flex gap="3" align="center">
-                <Avatar
-                  size="3"
-                  src={mockEmail.senderAvatar}
-                  radius="full"
-                  fallback={mockEmail.senderName.substring(0, 1).toUpperCase()}
-                />
-                <Box>
-                  <Text as="div" size="2" weight="regular">
-                    {mockEmail.senderName || mockEmail.senderEmail}
-                  </Text>
-                </Box>
-                <Box>
-                  <Text as="div" size="2" truncate className='max-w-prose text-white font-medium'>
-                    {mockEmail.subject}
-                  </Text>
-                  <Text as="div" size="2" color="gray" truncate className='max-w-prose'>
-                    {mockEmail.content}
-                  </Text>
-                </Box>
-              </Flex>
-            </Flex>
-          </Box>
-        </Box>
-      </Grid>
-    </main>
+          <Flex gap="3" align="center">
+            <Text as="div" size="2" truncate className='text-white font-medium'>
+              {mockEmail.subject}
+            </Text>
+            <Text as="div" size="2" color="gray" truncate className='max-w-prose'>
+              {mockEmail.content}
+            </Text>
+          </Flex>
+        </Flex>
+
+      </Box>
+    </Grid>
   );
 }
