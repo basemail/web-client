@@ -51,7 +51,8 @@ function Providers({ children }: Props) {
   return (
     <Theme
       appearance='dark'
-      >
+      radius="none"
+    >
       <OnchainProviders>
         <SiweProvider>
           {children}

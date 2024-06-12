@@ -1,12 +1,28 @@
 'use client';
 import React from 'react';
 import { InboxSolid, ArchiveBox, Trash, FolderOpen } from '@medusajs/icons';
-import {
-  PaperPlaneIcon,
-  MagnifyingGlassIcon,
-} from '@radix-ui/react-icons';
+import { PaperPlaneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Grid, Box, Text, TextField, Button, Flex, Avatar } from "@radix-ui/themes";
+import { useWindowSize } from "@uidotdev/usehooks";
 import Image from 'next/image';
+import MailRowDisplay from '@/components/MailDisplay / MailDisplay';
+
+// Define Email interface
+interface Email {
+  senderEmail: string;
+  senderAvatar: string;
+  senderName: string;
+  recipientEmail: string;
+  subject: string;
+  timestamp: string;
+  content: string;
+  attachments: string[];
+  isRead: boolean;
+  priority: 'Low' | 'Normal' | 'High';
+  replyTo: string;
+  cc: string[];
+  bcc: string[];
+}
 
 const folders = [
   { label: 'Inbox', icon: <InboxSolid /> },
@@ -16,7 +32,7 @@ const folders = [
   { label: 'Trash', icon: <Trash /> }
 ];
 
-const mockEmail = {
+const mockEmail: Email = {
   senderEmail: 'hello@basedMail.com',
   senderAvatar: 'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop',
   senderName: 'BaseMail Official',
@@ -44,68 +60,65 @@ const mockEmail = {
   replyTo: 'support@basedMail.com',
   cc: [],
   bcc: []
-}
+};
 
 
 export default function BaseMail() {
+  const { width } = useWindowSize();
+  const isSmall = width && width > 500;
+  console.log(width);
+
+  const emails = Array.from({ length: 10 }).map((_, index) => ({
+    ...mockEmail,
+    timestamp: new Date(Date.now() - index * 1000 * 60 * 60).toISOString(),
+  }));
+
+
   return (
+    <Grid
+      columns="2"
+      className="h-full"
+      style={{ gridTemplateColumns: isSmall ? `minmax(0, 400px) 1fr` : `minmax(0, ${width}px) 1fr` }}
+    >
+      {
+        isSmall &&
+        <Box id="sidebar" p="4">
+          <Flex align="center" gap="3" p="4" className='hover:cursor-pointer'>
+            <Image
+              src='/icons/48x48.png'
+              width={32}
+              height={32}
+              alt="logo" />
+            <Text size="6" weight="bold">
+              BaseMail
+            </Text>
+          </Flex>
 
-    <Grid columns="10" gap="3" width="auto" className="h-full">
-      <Box id="mail-boxes" style={{ gridColumn: 'span 1' }}>
-        <Flex align="center" gap="3" p="4" className='hover:cursor-pointer hover:bg-gray-900'>
-          <Image
-            src='/icons/48x48.png'
-            width={32}
-            height={32}
-            alt="logo" />
-          <Text size="6" weight="bold">
-            Basemail
-          </Text>
-        </Flex>
+          <Flex direction="column" gap="3" m="4" mt="5">
+            {folders.map(({ icon, label }) => (
+              <Button variant='ghost' size='3' color='gray' key={label}>
+                {icon}
+                <Text className='w-full flex justify-start'>
+                  {label}
+                </Text>
+              </Button>
+            ))}
+          </Flex>
+        </Box>
+      }
 
-        <Flex className='flex-col gap-3 m-4 mt-5'>
-          {folders.map(({ icon, label }) => (
-            <Button variant='ghost' size='3' color='gray' key={label} >
-              {icon}
-              <Text className='w-full flex justify-start'>
-                {label}
-              </Text>
-            </Button>
-          ))}
-        </Flex>
-      </Box>
-      <Box id="mails" style={{ gridColumn: 'span 9' }} >
-        <Box p="2">
-          <TextField.Root placeholder="Search folders…" size="3">
+      <Box p="4" id='mails-section' className='bg-zinc-900 overflow-hidden'>
+        <Box mb="4">
+          <TextField.Root placeholder="Search mails…" size="3">
             <TextField.Slot>
               <MagnifyingGlassIcon height="16" width="16" />
             </TextField.Slot>
           </TextField.Root>
         </Box>
-        <Flex width="full" gap="3" align="center" p="2" className='hover:bg-gray-900'>
-          <Flex gap="3" align="center">
-            <Avatar
-              size="2"
-              src={mockEmail.senderAvatar}
-              highContrast
-              fallback={mockEmail.senderName.substring(0, 1).toUpperCase()}
-            />
 
-            <Text as="div" size="2" weight="regular">
-              {mockEmail.senderName || mockEmail.senderEmail}
-            </Text>
-
-          </Flex>
-          <Flex gap="3" align="center">
-            <Text as="div" size="2" truncate className='text-white font-medium'>
-              {mockEmail.subject}
-            </Text>
-            <Text as="div" size="2" color="gray" truncate className='max-w-prose'>
-              {mockEmail.content}
-            </Text>
-          </Flex>
-        </Flex>
-
+        {emails.map((email, index) => (
+          <MailRowDisplay email={email} key={Number(index)} />
+        ))}
       </Box>
     </Grid>
   );
