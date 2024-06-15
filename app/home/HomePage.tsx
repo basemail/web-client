@@ -1,11 +1,11 @@
 'use client';
-// import { zeroAddress } from 'viem';
 import { useAccount } from 'wagmi';
 import { useSIWE } from '@/hooks/useSIWE';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/layout/footer/Footer';
 import AccountConnect from '@/components/layout/header/AccountConnect';
 import Header from '@/components/layout/header/Header';
+import AccountSelect from './_components/AccountSelect';
 
 /**
  * Use the page component to wrap the components
@@ -13,14 +13,27 @@ import Header from '@/components/layout/header/Header';
  */
 export default function HomePage() {
   const account = useAccount();
-
   const siwe = useSIWE();
+
 
   return (
     <>
       <Header />
       <main className="container mx-auto px-8 py-16">
-        {account.isConnected ? (
+        {account.isConnected && siwe.isAuthenticated && (
+          <div className="flex flex-col items-center">
+            <h1 className="bold text-4xl">b m</h1>
+            <br />
+            <p className="w-48 py-4 text-center">
+              You are connected and authenticated with the offchain mail service.
+            </p>
+            <p>
+              Access token: {siwe.getAccessToken()}
+            </p>
+            <AccountSelect />
+          </div>
+        )}
+        {account.isConnected && !siwe.isAuthenticated && (
           <div className="flex flex-col items-center">
             <h1 className="bold text-4xl">b m</h1>
             <br />
@@ -32,14 +45,9 @@ export default function HomePage() {
             <p className="w-48 text-center">
               Login with your smart wallet to authenticate with the offchain mail service.
             </p>
-            <p>
-              Login status: {siwe.isAuthenticated ? 'Authenticated' : 'Not authenticated'}
-            </p>
-            <p>
-              Access token: {siwe.getAccessToken()}
-            </p>
           </div>
-        ) : (
+        )}
+        {!account.isConnected && (
           <div className="flex flex-col items-center">
             <h1 className="bold text-4xl">b m</h1>
             <br />

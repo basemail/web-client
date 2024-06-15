@@ -1,4 +1,4 @@
-import { ContractAlertLayout } from 'app/buy-me-coffee/_components/ContractAlert';
+// import { ContractAlertLayout } from 'app/buy-me-coffee/_components/ContractAlert';
 import clsx from 'clsx';
 import { useAccount } from 'wagmi';
 import { useWriteContracts } from 'wagmi/experimental';
@@ -60,9 +60,9 @@ export default function PaymasterBundlerDemo() {
             Mint NFTs with Coinbase Paymaster
           </h1>
         </header>
-        {!address && (
+        {/* {!address && (
           <ContractAlertLayout>Please connect your wallet to continue.</ContractAlertLayout>
-        )}
+        )} */}
         <button
           type="button"
           className={clsx(
