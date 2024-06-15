@@ -1,11 +1,11 @@
 'use client';
 // import { zeroAddress } from 'viem';
 import { useAccount } from 'wagmi';
+import { useSIWE } from '@/hooks/useSIWE';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/layout/footer/Footer';
 import AccountConnect from '@/components/layout/header/AccountConnect';
 import Header from '@/components/layout/header/Header';
-// import { useSIWE } from '@/hooks/useSIWE';
 
 /**
  * Use the page component to wrap the components
@@ -14,11 +14,7 @@ import Header from '@/components/layout/header/Header';
 export default function HomePage() {
   const account = useAccount();
 
-  // const loginMessage = useSIWE(account.address ?? zeroAddress, account.chainId ?? 0);
-  // const sign = useSignMessage();
-
-  // const onLogin = () => sign.signMessage({ message: loginMessage });
-  const onLogin = () => console.log('login');
+  const siwe = useSIWE();
 
   return (
     <>
@@ -31,10 +27,16 @@ export default function HomePage() {
             <Button
               buttonContent={<h2 className="text-lg">Login</h2>}
               className="my-8 w-40"
-              onClick={onLogin}
+              onClick={siwe.signIn}
             />
             <p className="w-48 text-center">
               Login with your smart wallet to authenticate with the offchain mail service.
+            </p>
+            <p>
+              Login status: {siwe.isAuthenticated ? 'Authenticated' : 'Not authenticated'}
+            </p>
+            <p>
+              Access token: {siwe.getAccessToken()}
             </p>
           </div>
         ) : (

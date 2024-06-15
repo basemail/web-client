@@ -4,10 +4,11 @@ import { ReactNode } from 'react';
 import { OnchainKitProvider } from '@coinbase/onchainkit';
 import { Theme } from '@radix-ui/themes';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { AuthProvider, AuthProviderProps } from 'oidc-react';
+// import { AuthProvider, AuthProviderProps } from 'oidc-react';
 import { baseSepolia } from 'viem/chains';
-import { useAccount, WagmiProvider } from 'wagmi';
+import { WagmiProvider } from 'wagmi';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
+import { SIWEProvider } from '@/hooks/useSIWE';
 // TODO control with environment variables
 
 
@@ -29,24 +30,6 @@ function OnchainProviders({ children }: Props) {
   );
 }
 
-function SiweProvider({ children }: Props) {
-
-  const account = useAccount();
-
-  const oidcConfig: AuthProviderProps = {
-    authority: 'https://siwe-oidc-production.up.railway.app',
-    clientId: 'TODO-get-a-client-id',
-    redirectUri: 'http://localhost:3000',
-    autoSignIn: account.isConnected,
-  };
-
-  return (
-    <AuthProvider {...oidcConfig}>
-      {children}
-    </AuthProvider>
-  );
-}
-
 function Providers({ children }: Props) {
   return (
     <Theme
@@ -54,9 +37,9 @@ function Providers({ children }: Props) {
       radius="none"
     >
       <OnchainProviders>
-        <SiweProvider>
+        <SIWEProvider>
           {children}
-        </SiweProvider>
+        </SIWEProvider>
       </OnchainProviders>
     </Theme>
   );

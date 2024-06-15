@@ -33,37 +33,37 @@ const folders = [
 ];
 
 const mockEmail: Email = {
-  senderEmail: 'hello@basedMail.com',
+  senderEmail: 'hello@basechain.email',
   senderAvatar: 'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop',
-  senderName: 'BaseMail Official',
+  senderName: 'Basemail Official',
   recipientEmail: 'user@example.com',
-  subject: 'Welcome to BaseMail!',
+  subject: 'Welcome to Basemail!',
   timestamp: '2024-06-10T10:00:00Z',
-  content: `**Welcome to BaseMail!**
+  content: `**Welcome to Basemail!**
 
   Hi [User's First Name],
 
-  We're excited to have you on board. BaseMail is designed to make your email experience smooth and efficient. Here are a few things you can do to get started:
+  We're excited to have you on board. Basemail is designed to make your email experience smooth and efficient. Here are a few things you can do to get started:
 
   - **Set Up Your Profile:** Personalize your account to make it uniquely yours.
   - **Explore Features:** Check out our intuitive features to help you manage your emails better.
   - **Get Support:** Have questions? Our support team is here to help you 24/7.
 
-  Thank you for choosing BaseMail. We look forward to providing you with the best email service experience.
+  Thank you for choosing Basemail. We look forward to providing you with the best email service experience.
 
   Best regards,
-  The BaseMail Team
+  The Basemail Team
 `,
   attachments: [],
   isRead: false,
   priority: 'Normal',
-  replyTo: 'support@basedMail.com',
+  replyTo: 'support@basechain.email',
   cc: [],
   bcc: []
 };
 
 
-export default function BaseMail() {
+export default function Basemail() {
   const { width } = useWindowSize();
   const isSmall = width && width > 500;
   console.log(width);
