@@ -32,16 +32,16 @@ function OnchainProviders({ children }: Props) {
 
 function Providers({ children }: Props) {
   return (
-    <Theme
-      appearance='dark'
-      radius="none"
-    >
+    // <Theme
+    //   appearance='dark'
+    //   radius="none"
+    // >
       <OnchainProviders>
         <SIWEProvider>
           {children}
         </SIWEProvider>
       </OnchainProviders>
-    </Theme>
+    // </Theme>
   );
 }
 
