@@ -7,7 +7,7 @@ import FooterIcon from './FooterIcon';
 
 export default function Footer() {
   return (
-    <footer className="flex flex-1 flex-col justify-end">
+    <footer className="justify-end absolute bottom-0 w-full">
       <div className="flex flex-col justify-between gap-16 bg-boat-footer-dark-gray py-12">
         <div className="container mx-auto flex w-full flex-col justify-between gap-16 px-8 md:flex-row">
           <div className="flex flex-col justify-between">

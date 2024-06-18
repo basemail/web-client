@@ -1,0 +1,9 @@
+.openapi-generator-ignore
+apis/AuthenticationApi.ts
+apis/index.ts
+index.ts
+models/JWTPair.ts
+models/SigninData.ts
+models/ValidateData.ts
+models/index.ts
+runtime.ts
