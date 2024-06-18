@@ -41,7 +41,7 @@ export const AccountSelect = (): JSX.Element => {
                     <select>
                         {accounts?.map((account: bigint) => (
                             <option key={account.toString()} value={account.toString()}>
-                                {account}
+                                {account.toString()}
                             </option>
                         ))}
                     </select>
