@@ -1,10 +1,10 @@
 'use client';
 import { useAccount } from 'wagmi';
-import { useSIWE } from '@/hooks/useSIWE';
 import Button from '@/components/Button/Button';
 import Footer from '@/components/layout/footer/Footer';
 import AccountConnect from '@/components/layout/header/AccountConnect';
 import Header from '@/components/layout/header/Header';
+import { useSIWE } from '@/hooks/useSIWE';
 import AccountSelect from './_components/AccountSelect';
 
 /**
@@ -15,6 +15,7 @@ export default function HomePage() {
   const account = useAccount();
   const siwe = useSIWE();
 
+  const handleSignIn = siwe.signIn;
 
   return (
     <>
@@ -40,7 +41,7 @@ export default function HomePage() {
             <Button
               buttonContent={<h2 className="text-lg">Login</h2>}
               className="my-8 w-40"
-              onClick={siwe.signIn}
+              onClick={handleSignIn}
             />
             <p className="w-48 text-center">
               Login with your smart wallet to authenticate with the offchain mail service.

@@ -1,17 +1,21 @@
+import { useState, useCallback } from 'react';
 import { useAccount, useReadContract, useWriteContract } from 'wagmi';
-import { useBasemailAccountContract } from '../_contracts/useBasemailAccountContract';
 import Button from '@/components/Button/Button';
-import { useState } from 'react';
+import { useBasemailAccountContract } from '../_contracts/useBasemailAccountContract';
 import { CallStatus } from './CallStatus';
 
 
-export const AccountSelect = (): JSX.Element => {
+export function AccountSelect(): JSX.Element {
     const { address, isConnected } = useAccount();
     const contract = useBasemailAccountContract();
     const { data: callID, writeContract } = useWriteContract();
 
+    if (contract.status !== 'ready') {
+        throw new Error('Contract not ready');
+    }
+
     const { data: accounts } = useReadContract({
-        address: contract.address ?? '0x',
+        address: contract.address,
         abi: contract.abi,
         functionName: 'getAccounts',
         args: [address ?? '0x'],
@@ -24,14 +28,14 @@ export const AccountSelect = (): JSX.Element => {
     console.log('accounts', accounts);
     console.log('contract address', contract.address);
 
-    const onCreateAccount = () => {
+    const onCreateAccount = useCallback(() => {
         writeContract({
-            address: contract.address ?? '0x',
+            address: contract.address,
             abi: contract.abi,
             functionName: 'createAccount',
             args: [address ?? '0x', username],
         }); 
-    }
+    }, [contract, address, username, writeContract]);
 
     return (
         <div>
