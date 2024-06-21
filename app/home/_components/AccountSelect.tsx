@@ -51,9 +51,10 @@ export function AccountSelect(): JSX.Element {
     });
   }, [contract, address, username, writeContract]);
 
-  const handleEnterApp = useCallback(() => {
-    console.log('Enter app');
-  }, []);
+  const handleEnterApp = () => {
+    // TODO send Basic auth credentials to mail-server, set mailAccessToken and mailRefreshToken in session storage, and redirect to /mail
+    
+  }
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (
