@@ -13,13 +13,8 @@ export function AccountSelect(): JSX.Element {
     throw new Error('Contract not ready');
   }
 
-  console.log('address', address);
-  console.log('status', contract.status);
-  console.log('query enabled', isConnected && contract.status === 'ready');
-
-  console.log('contract address', contract.address);
-
-  const { data, error, isPending } = useReadContracts({
+  // TODO handle pending and error states?
+  const { data } = useReadContracts({
     contracts: [
       {
         address: contract.address,
@@ -37,10 +32,7 @@ export function AccountSelect(): JSX.Element {
     query: { enabled: isConnected && contract.status === 'ready' },
   });
 
-  console.log('data', data);
   const [{ result: accountIds }, { result: usernames }] = data ?? [{ result: [] }, { result: [] }];
-  console.log('accountIds', accountIds);
-  console.log('usernames', usernames);
 
   const accounts = Array.from({ length: accountIds.length }, (_, i) => ({
     id: accountIds[i].toString(),
@@ -48,11 +40,7 @@ export function AccountSelect(): JSX.Element {
   }));
 
   const [username, setUsername] = useState<string>('');
-  const [selectedAccount, setSelectedAccount] = useState<string>('');
-
-  console.log('accounts', accounts);
-  console.log('error', error);
-  console.log('isPending', isPending);
+  const [selectedAccount, setSelectedAccount] = useState<string>('new');
 
   const onCreateAccount = useCallback(() => {
     writeContract({
@@ -67,9 +55,10 @@ export function AccountSelect(): JSX.Element {
     console.log('Enter app');
   }, []);
 
+  // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (
     <div className="w-48 text-center">
-      <select className="my-4 text-lg" onChange={(e) => setSelectedAccount(e.target.value)}>
+      <select className="my-4 text-lg" onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount}>
         {(accounts?.length ?? 0) > 0 &&
           accounts?.map(({ id, username }) => (
             <option key={id} value={id}>

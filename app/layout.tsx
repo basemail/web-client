@@ -1,8 +1,8 @@
 import './global.css';
 import '@radix-ui/themes/styles.css';
+import { CookiesProvider } from 'next-client-cookies/server';
 import GoogleAnalytics from '@/components/GoogleAnalytics/GoogleAnalytics';
 import Providers from '@/Providers';
-import { CookiesProvider } from 'next-client-cookies/server';
 
 import { initAnalytics } from '@/utils/analytics';
 import { inter } from './fonts';
@@ -28,7 +28,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${inter.className}`}>
       <body className="flex flex-1 flex-col">
-        <CookiesProvider><Providers>{children}</Providers></CookiesProvider>
+        <CookiesProvider>
+          <Providers>{children}</Providers>
+        </CookiesProvider>
       </body>
       <GoogleAnalytics />
     </html>

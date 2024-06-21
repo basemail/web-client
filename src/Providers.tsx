@@ -7,10 +7,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 // import { AuthProvider, AuthProviderProps } from 'oidc-react';
 import { baseSepolia } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
-import { createWagmiConfig } from '@/store/createWagmiConfig';
 import { SIWEProvider } from '@/hooks/useSIWE';
+import { createWagmiConfig } from '@/store/createWagmiConfig';
 // TODO control with environment variables
-
 
 type Props = { children: ReactNode };
 
@@ -36,11 +35,9 @@ function Providers({ children }: Props) {
     //   appearance='dark'
     //   radius="none"
     // >
-      <OnchainProviders>
-        <SIWEProvider>
-          {children}
-        </SIWEProvider>
-      </OnchainProviders>
+    <OnchainProviders>
+      <SIWEProvider>{children}</SIWEProvider>
+    </OnchainProviders>
     // </Theme>
   );
 }
