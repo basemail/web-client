@@ -6471,6 +6471,7 @@ __metadata:
     jest-environment-jsdom: "npm:^29.7.0"
     jest-extended: "npm:^4.0.2"
     jmap-client-ts: "npm:^1.0.0"
+    jmap-jam: "npm:^0.7.0"
     net: "npm:^1.0.2"
     next: "npm:13.5.6"
     next-client-cookies: "npm:^1.1.1"
@@ -10930,6 +10931,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jmap-jam@npm:^0.7.0":
+  version: 0.7.0
+  resolution: "jmap-jam@npm:0.7.0"
+  dependencies:
+    type-fest: "npm:4.5.0"
+  checksum: 10c0/6e0faf1a783a3c0125c98c6f6d062604a2bd9007e22b9de499e827ba54d9c468c3cbe42ecf54b853009043dc175c0d41b57665971499db27588a3873343310f6
+  languageName: node
+  linkType: hard
+
 "joycon@npm:^3.1.1":
   version: 3.1.1
   resolution: "joycon@npm:3.1.1"
@@ -15343,6 +15353,13 @@ __metadata:
   version: 4.0.8
   resolution: "type-detect@npm:4.0.8"
   checksum: 10c0/8fb9a51d3f365a7de84ab7f73b653534b61b622aa6800aecdb0f1095a4a646d3f5eb295322127b6573db7982afcd40ab492d038cf825a42093a58b1e1353e0bd
+  languageName: node
+  linkType: hard
+
+"type-fest@npm:4.5.0":
+  version: 4.5.0
+  resolution: "type-fest@npm:4.5.0"
+  checksum: 10c0/8f45700dcfbdd03f2882a9e47e5ef21b8f879c4731633ed5ed43f4887b866d936ff27af0999afaa486a5683c03a45bd25bcf4d021ad9ac2486899867bfec91e3
   languageName: node
   linkType: hard
 

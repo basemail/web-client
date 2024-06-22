@@ -2,13 +2,13 @@
 import React from 'react';
 import { InboxSolid, ArchiveBox, Trash, FolderOpen } from '@medusajs/icons';
 import { PaperPlaneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Grid, Box, Text, TextField, Button, Flex, Avatar } from "@radix-ui/themes";
-import { useWindowSize } from "@uidotdev/usehooks";
+import { Grid, Box, Text, TextField, Button, Flex, Avatar } from '@radix-ui/themes';
+import { useWindowSize } from '@uidotdev/usehooks';
 import Image from 'next/image';
 import MailRowDisplay from '@/components/MailDisplay / MailDisplay';
 
 // Define Email interface
-interface Email {
+type Email = {
   senderEmail: string;
   senderAvatar: string;
   senderName: string;
@@ -28,13 +28,14 @@ const folders = [
   { label: 'Inbox', icon: <InboxSolid /> },
   { label: 'Saved', icon: <ArchiveBox /> },
   { label: 'Drafts', icon: <FolderOpen /> },
-  { label: 'Sent', icon: <PaperPlaneIcon className='w-5 h-4' /> },
-  { label: 'Trash', icon: <Trash /> }
+  { label: 'Sent', icon: <PaperPlaneIcon className="h-4 w-5" /> },
+  { label: 'Trash', icon: <Trash /> },
 ];
 
 const mockEmail: Email = {
   senderEmail: 'hello@basechain.email',
-  senderAvatar: 'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop',
+  senderAvatar:
+    'https://images.unsplash.com/photo-1607346256330-dee7af15f7c5?&w=64&h=64&dpr=2&q=70&crop=focalpoint&fp-x=0.67&fp-y=0.5&fp-z=1.4&fit=crop',
   senderName: 'Basemail Official',
   recipientEmail: 'user@example.com',
   subject: 'Welcome to Basemail!',
@@ -59,9 +60,8 @@ const mockEmail: Email = {
   priority: 'Normal',
   replyTo: 'support@basechain.email',
   cc: [],
-  bcc: []
+  bcc: [],
 };
-
 
 export default function Basemail() {
   const { width } = useWindowSize();
@@ -73,22 +73,18 @@ export default function Basemail() {
     timestamp: new Date(Date.now() - index * 1000 * 60 * 60).toISOString(),
   }));
 
-
   return (
     <Grid
       columns="2"
       className="h-full"
-      style={{ gridTemplateColumns: isSmall ? `minmax(0, 400px) 1fr` : `minmax(0, ${width}px) 1fr` }}
+      style={{
+        gridTemplateColumns: isSmall ? `minmax(0, 400px) 1fr` : `minmax(0, ${width}px) 1fr`,
+      }}
     >
-      {
-        isSmall &&
+      {isSmall && (
         <Box id="sidebar" p="4">
-          <Flex align="center" gap="3" p="4" className='hover:cursor-pointer'>
-            <Image
-              src='/icons/48x48.png'
-              width={32}
-              height={32}
-              alt="logo" />
+          <Flex align="center" gap="3" p="4" className="hover:cursor-pointer">
+            <Image src="/icons/48x48.png" width={32} height={32} alt="logo" />
             <Text size="6" weight="bold">
               BaseMail
             </Text>
@@ -96,18 +92,16 @@ export default function Basemail() {
 
           <Flex direction="column" gap="3" m="4" mt="5">
             {folders.map(({ icon, label }) => (
-              <Button variant='ghost' size='3' color='gray' key={label}>
+              <Button variant="ghost" size="3" color="gray" key={label}>
                 {icon}
-                <Text className='w-full flex justify-start'>
-                  {label}
-                </Text>
+                <Text className="flex w-full justify-start">{label}</Text>
               </Button>
             ))}
           </Flex>
         </Box>
-      }
+      )}
 
-      <Box p="4" id='mails-section' className='bg-zinc-900 overflow-hidden'>
+      <Box p="4" id="mails-section" className="overflow-hidden bg-zinc-900">
         <Box mb="4">
           <TextField.Root placeholder="Search mails…" size="3">
             <TextField.Slot>

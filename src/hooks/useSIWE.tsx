@@ -1,8 +1,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
+import { useCookies } from 'next-client-cookies';
 import { SiweMessage } from 'siwe';
 import { useAccount, useSignMessage, useChainId } from 'wagmi';
 import { AuthenticationApi, SigninData } from '@/gen';
-import { useCookies } from 'next-client-cookies';
 
 // SIWE context
 type SIWEContextState = {
@@ -10,7 +10,7 @@ type SIWEContextState = {
   isAuthenticated: boolean;
   signIn: () => void;
   getAccessToken: () => string | null;
-}
+};
 
 const initialState = {} as SIWEContextState;
 export const SIWEContext = createContext<SIWEContextState>(initialState);
@@ -19,7 +19,7 @@ export const useSIWE = () => {
   return useContext(SIWEContext);
 };
 
-export const SIWEProvider = ({ children }: { children: React.ReactNode }) => {
+export function SIWEProvider({ children }: { children: React.ReactNode }) {
   // We expect there to be onchain context available
   const { address } = useAccount();
   const chainId = useChainId();
@@ -31,19 +31,17 @@ export const SIWEProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Simple storage for auth tokens
   const TokenStorage = {
-    getAccessToken: () => cookies.get("siwe_access_token"),
-    getRefreshToken: () => cookies.get("siwe_refresh_token"),
-    setAccessToken: (token: string) =>
-      cookies.set("siwe_access_token", token),
-    setRefreshToken: (token: string) =>
-      cookies.set("siwe_refresh_token", token),
+    getAccessToken: () => cookies.get('siwe_access_token'),
+    getRefreshToken: () => cookies.get('siwe_refresh_token'),
+    setAccessToken: (token: string) => cookies.set('siwe_access_token', token),
+    setRefreshToken: (token: string) => cookies.set('siwe_refresh_token', token),
   };
 
   // Clear tokens when the address changes
   useEffect(() => {
     if (TokenStorage.getAccessToken() || TokenStorage.getRefreshToken()) {
-      TokenStorage.setAccessToken("");
-      TokenStorage.setRefreshToken("");
+      TokenStorage.setAccessToken('');
+      TokenStorage.setRefreshToken('');
     }
   }, [address]);
 
@@ -52,12 +50,11 @@ export const SIWEProvider = ({ children }: { children: React.ReactNode }) => {
 
   const { signMessageAsync } = useSignMessage();
 
-  async function signAuthMessage(): Promise<{ message: string, signature: string }> {
+  async function signAuthMessage(): Promise<{ message: string; signature: string }> {
     // TODO change this to the actual domain and origin once we have real deployments
-    const domain = "basechain.email"; //window.location.host;
-    const origin = "https://basechain.email"; //window.location.origin;
+    const domain = 'basechain.email'; //window.location.host;
+    const origin = 'https://basechain.email'; //window.location.origin;
     const statement = `You must login with your Smart Wallet to authenticate with the offchain mail service.`;
-
 
     // 1. Get a nonce from the api
     let nonce = '';
@@ -127,4 +124,4 @@ export const SIWEProvider = ({ children }: { children: React.ReactNode }) => {
       {children}
     </SIWEContext.Provider>
   );
-};
+}
