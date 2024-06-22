@@ -1,6 +1,7 @@
 import { useState, useCallback } from 'react';
 import { useAccount, useReadContracts, useWriteContract } from 'wagmi';
 import Button from '@/components/Button/Button';
+import { useMailAuth } from '@/hooks/useMailAuth';
 import { useBasemailAccountContract } from '../_contracts/useBasemailAccountContract';
 import { CallStatus } from './CallStatus';
 
@@ -8,6 +9,7 @@ export function AccountSelect(): JSX.Element {
   const { address, isConnected } = useAccount();
   const contract = useBasemailAccountContract();
   const { data: callID, writeContract } = useWriteContract();
+  const { signIn, getAccessToken: getMailAccessToken } = useMailAuth();
 
   if (contract.status !== 'ready') {
     throw new Error('Contract not ready');
@@ -52,14 +54,22 @@ export function AccountSelect(): JSX.Element {
   }, [contract, address, username, writeContract]);
 
   const handleEnterApp = () => {
-    // TODO send Basic auth credentials to mail-server, set mailAccessToken and mailRefreshToken in session storage, and redirect to /mail
-    
-  }
+    // Sign in to the mail server using the account ID and SIWE token
+    signIn(selectedAccount);
+
+    console.log('Mail Access Token:', getMailAccessToken());
+
+    // TODO - Navigate to the app
+  };
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (
     <div className="w-48 text-center">
-      <select className="my-4 text-lg" onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount}>
+      <select
+        className="my-4 text-lg"
+        onChange={(e) => setSelectedAccount(e.target.value)}
+        value={selectedAccount}
+      >
         {(accounts?.length ?? 0) > 0 &&
           accounts?.map(({ id, username }) => (
             <option key={id} value={id}>

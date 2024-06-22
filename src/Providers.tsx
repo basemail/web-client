@@ -9,6 +9,7 @@ import { baseSepolia } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
 import { SIWEProvider } from '@/hooks/useSIWE';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
+import { MailAuthProvider } from './hooks/useMailAuth';
 // TODO control with environment variables
 
 type Props = { children: ReactNode };
@@ -36,7 +37,9 @@ function Providers({ children }: Props) {
     //   radius="none"
     // >
     <OnchainProviders>
-      <SIWEProvider>{children}</SIWEProvider>
+      <SIWEProvider>
+        <MailAuthProvider>{children}</MailAuthProvider>
+      </SIWEProvider>
     </OnchainProviders>
     // </Theme>
   );

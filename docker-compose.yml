@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     # todo: add mongo credentials and authorize api calls
     # this is bad but i don't want to create a mongo user on my system
-    user: root 
+    user: root
     volumes:
       - auth-data:/data/db
     ports:
@@ -14,12 +14,12 @@ services:
 
   mongo-init:
     image: ghcr.io/basemail/auth-server:latest
-    network_mode: "host"
+    network_mode: 'host'
     depends_on:
       - mongo
     restart: no
     environment:
-        ENVIRONMENT: test
+      ENVIRONMENT: test
     entrypoint:
       - ./admin
       - init-db
@@ -27,21 +27,21 @@ services:
   auth-server:
     image: ghcr.io/basemail/auth-server:latest
     # todo: stop hardcoding localhost
-    network_mode: "host"
+    network_mode: 'host'
     depends_on:
       - mongo
     restart: unless-stopped
     ports:
-      - "8081:8081"
+      - '8081:8081'
     environment:
-        ENVIRONMENT: local
-        JWT_SECRET: ${JWT_SECRET?set JWT_SECRET in your .env file}
+      ENVIRONMENT: local
+      JWT_SECRET: ${JWT_SECRET?set JWT_SECRET in your .env file}
     entrypoint:
       - ./api
 
   mail-server:
     image: ghcr.io/basemail/mail-server:latest
-    network_mode: "host"
+    network_mode: 'host'
     restart: unless-stopped
     depends_on:
       - auth-server

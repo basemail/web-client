@@ -22,7 +22,7 @@ type Email = {
   replyTo: string;
   cc: string[];
   bcc: string[];
-}
+};
 
 const folders = [
   { label: 'Inbox', icon: <InboxSolid /> },
