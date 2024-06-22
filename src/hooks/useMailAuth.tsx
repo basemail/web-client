@@ -9,7 +9,7 @@ import { useSIWE } from './useSIWE';
 type AuthCode = {
   code?: string;
   isAdmin?: boolean;
-}
+};
 
 function AuthCodeFromJSONTyped(json: unknown, ignoreDiscriminator: boolean): AuthCode {
   if (json == null) {
@@ -25,16 +25,14 @@ function AuthCodeFromJSON(json: unknown): AuthCode {
   return AuthCodeFromJSONTyped(json, false);
 }
 
-
-
 type AuthCodePostRequest = {
   username: string;
   password: string;
-}
+};
 
 type AuthTokenPostRequest = {
   code: string;
-}
+};
 
 class MailAuthApi extends runtime.BaseAPI {
   async authCodePostRaw(
@@ -139,6 +137,7 @@ class MailAuthApi extends runtime.BaseAPI {
 type MailAuthContextState = {
   isLoading: boolean;
   isAuthenticated: boolean;
+  accountId?: string | undefined;
   signIn: (accountId: string) => void;
   getAccessToken: () => string | undefined;
 };
@@ -154,8 +153,9 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
   // We expect there to be siwe context available
   const { getAccessToken: getSIWEToken } = useSIWE();
 
-  // Track loading state
+  // Track loading state and account id
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [accountId, setAccountId] = useState<string | undefined>();
 
   const cookies = useCookies();
 
@@ -197,6 +197,8 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
         code: authCode?.code!,
       });
 
+      // 4. Store the tokens and set account ID
+      setAccountId(accountId);
       TokenStorage.setAccessToken(response?.accessToken!);
       TokenStorage.setRefreshToken(response?.refreshToken!);
     } catch (e) {
@@ -212,6 +214,7 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
       value={{
         isLoading,
         isAuthenticated: !!TokenStorage.getAccessToken(),
+        accountId,
         signIn,
         getAccessToken: TokenStorage.getAccessToken,
       }}

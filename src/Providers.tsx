@@ -32,16 +32,13 @@ function OnchainProviders({ children }: Props) {
 
 function Providers({ children }: Props) {
   return (
-    // <Theme
-    //   appearance='dark'
-    //   radius="none"
-    // >
-    <OnchainProviders>
-      <SIWEProvider>
-        <MailAuthProvider>{children}</MailAuthProvider>
-      </SIWEProvider>
-    </OnchainProviders>
-    // </Theme>
+    <Theme appearance="dark" radius="none">
+      <OnchainProviders>
+        <SIWEProvider>
+          <MailAuthProvider>{children}</MailAuthProvider>
+        </SIWEProvider>
+      </OnchainProviders>
+    </Theme>
   );
 }
 
