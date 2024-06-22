@@ -1,69 +1,98 @@
 import { useState, useCallback } from 'react';
-import { useAccount, useReadContract, useWriteContract } from 'wagmi';
+import { useAccount, useReadContracts, useWriteContract } from 'wagmi';
 import Button from '@/components/Button/Button';
 import { useBasemailAccountContract } from '../_contracts/useBasemailAccountContract';
 import { CallStatus } from './CallStatus';
 
-
 export function AccountSelect(): JSX.Element {
-    const { address, isConnected } = useAccount();
-    const contract = useBasemailAccountContract();
-    const { data: callID, writeContract } = useWriteContract();
+  const { address, isConnected } = useAccount();
+  const contract = useBasemailAccountContract();
+  const { data: callID, writeContract } = useWriteContract();
 
-    if (contract.status !== 'ready') {
-        throw new Error('Contract not ready');
-    }
+  if (contract.status !== 'ready') {
+    throw new Error('Contract not ready');
+  }
 
-    const { data: accounts } = useReadContract({
+  // TODO handle pending and error states?
+  const { data } = useReadContracts({
+    contracts: [
+      {
         address: contract.address,
         abi: contract.abi,
         functionName: 'getAccounts',
         args: [address ?? '0x'],
-        query: { enabled: isConnected && contract.status === 'ready' },   
+      },
+      {
+        address: contract.address,
+        abi: contract.abi,
+        functionName: 'getUsernames',
+        args: [address ?? '0x'],
+      },
+    ],
+    query: { enabled: isConnected && contract.status === 'ready' },
+  });
+
+  const [{ result: accountIds }, { result: usernames }] = data ?? [{ result: [] }, { result: [] }];
+
+  const accounts = Array.from({ length: accountIds.length }, (_, i) => ({
+    id: accountIds[i].toString(),
+    username: usernames[i].toString(),
+  }));
+
+  const [username, setUsername] = useState<string>('');
+  const [selectedAccount, setSelectedAccount] = useState<string>('new');
+
+  const onCreateAccount = useCallback(() => {
+    writeContract({
+      address: contract.address,
+      abi: contract.abi,
+      functionName: 'createAccount',
+      args: [address ?? '0x', username],
     });
+  }, [contract, address, username, writeContract]);
 
-    const [username, setUsername] = useState<string>('');
+  const handleEnterApp = () => {
+    // TODO send Basic auth credentials to mail-server, set mailAccessToken and mailRefreshToken in session storage, and redirect to /mail
+    
+  }
 
-
-    console.log('accounts', accounts);
-    console.log('contract address', contract.address);
-
-    const onCreateAccount = useCallback(() => {
-        writeContract({
-            address: contract.address,
-            abi: contract.abi,
-            functionName: 'createAccount',
-            args: [address ?? '0x', username],
-        }); 
-    }, [contract, address, username, writeContract]);
-
-    return (
+  // TODO show loading state before the accounts are fetched instead of defaulting to create new account
+  return (
+    <div className="w-48 text-center">
+      <select className="my-4 text-lg" onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount}>
+        {(accounts?.length ?? 0) > 0 &&
+          accounts?.map(({ id, username }) => (
+            <option key={id} value={id}>
+              {username}@basechain.email
+            </option>
+          ))}
+        <option value="new">Create New Account</option>
+      </select>
+      {selectedAccount === 'new' ? (
         <div>
-            {(accounts?.length ?? 0) > 0 && (
-                <div>
-                    <p>Select the account you want to use or create a new one</p>
-                    <select>
-                        {accounts?.map((account: bigint) => (
-                            <option key={account.toString()} value={account.toString()}>
-                                {account.toString()}
-                            </option>
-                        ))}
-                    </select>
-                    <br />
-                </div>
-            )}
-            <h2>Create Account</h2>
-            <h4>Username</h4>
-            <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-            <Button
-              buttonContent={<h2 className="text-lg">Submit</h2>}
-              className="my-8 w-40"
-              onClick={onCreateAccount}
-            />
-            {callID && <CallStatus id={callID} />}
+          <h4>Username</h4>
+          <input
+            className="my-2 border"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Button
+            buttonContent={<h2 className="text-lg">Submit</h2>}
+            className="my-4 w-32"
+            onClick={onCreateAccount}
+          />
+          {callID && <CallStatus id={callID} />}
         </div>
-    );
-
+      ) : (
+        <Button
+          buttonContent={<h2 className="text-lg">Open</h2>}
+          className="my-4 w-32"
+          onClick={handleEnterApp}
+        />
+      )}
+    </div>
+  );
 }
 
 export default AccountSelect;

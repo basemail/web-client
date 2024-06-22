@@ -28,9 +28,6 @@ export default function HomePage() {
             <p className="w-48 py-4 text-center">
               You are connected and authenticated with the offchain mail service.
             </p>
-            <p>
-              Access token: {siwe.getAccessToken()}
-            </p>
             <AccountSelect />
           </div>
         )}
@@ -38,11 +35,9 @@ export default function HomePage() {
           <div className="flex flex-col items-center">
             <h1 className="bold text-4xl">b m</h1>
             <br />
-            <Button
-              buttonContent={<h2 className="text-lg">Login</h2>}
-              className="my-8 w-40"
-              onClick={handleSignIn}
-            />
+            <div className="w-48 py-8">
+              <Button buttonContent={<h2 className="text-lg">Login</h2>} onClick={handleSignIn} />
+            </div>
             <p className="w-48 text-center">
               Login with your smart wallet to authenticate with the offchain mail service.
             </p>
