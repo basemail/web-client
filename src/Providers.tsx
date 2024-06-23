@@ -10,6 +10,7 @@ import { WagmiProvider } from 'wagmi';
 import { SIWEProvider } from '@/hooks/useSIWE';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
 import { MailAuthProvider } from './hooks/useMailAuth';
+import { MailProvider } from './hooks/useMail';
 // TODO control with environment variables
 
 type Props = { children: ReactNode };
@@ -35,7 +36,9 @@ function Providers({ children }: Props) {
     <Theme appearance="dark" radius="none">
       <OnchainProviders>
         <SIWEProvider>
-          <MailAuthProvider>{children}</MailAuthProvider>
+          <MailAuthProvider>
+            <MailProvider>{children}</MailProvider>
+          </MailAuthProvider>
         </SIWEProvider>
       </OnchainProviders>
     </Theme>

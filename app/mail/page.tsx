@@ -7,6 +7,7 @@ import { useWindowSize } from '@uidotdev/usehooks';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useMailAuth } from '@/hooks/useMailAuth';
+import { useMail } from '@/hooks/useMail';
 import ComposeMail from 'app/mail/_components/ComposeMail';
 import MailRow from 'app/mail/_components/MailRow';
 import { Email, Folder } from 'app/mail/_components/MailTypes';
@@ -83,6 +84,7 @@ export default function Basemail() {
   const isAuthenticated = true;
   const accountId = '5';
   const username = 'loki@basechain.email'; // TODO - Fetch username from the server
+  // const { client: mailClient } = useMail();
 
   const router = useRouter();
 
@@ -90,6 +92,7 @@ export default function Basemail() {
   if (!isAuthenticated) {
     router.push('/');
   }
+
 
   let emails = Array.from({ length: 10 }).map((_, index) => ({
     ...mockEmail,
