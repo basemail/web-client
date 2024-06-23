@@ -1,13 +1,54 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Button, Box, Flex, Text, TextField, TextArea } from '@radix-ui/themes';
 import { Email } from 'app/mail/_components/MailTypes';
+import { useMailAuth } from '@/hooks/useMailAuth';
 
-export default function ComposeMail() {
+export default function ComposeMail({ setCompose }: { setCompose: (compose: boolean) => void }){
+  const { username, useremail, accountId } = useMailAuth();
+
+
   const [toEmails, setToEmails] = React.useState<string>('');
   const [ccEmails, setCcEmails] = React.useState<string>('');
   const [bccEmails, setBccEmails] = React.useState<string>('');
   const [subject, setSubject] = React.useState<string>('');
   const [content, setContent] = React.useState<string>('');
+
+  const [email, setEmail] = React.useState<Email>({
+    senderEmail: useremail as string,
+    senderName: username as string,
+    senderAvatar: '',
+    recipientEmail: '',
+    cc: [] as string[],
+    bcc: [] as string[],
+    subject: '',
+    content: '',
+    attachments: [],
+    isRead: false,
+    priority: 'Normal',
+    replyTo: '',
+    timestamp: new Date().toISOString()
+  });
+
+  useEffect(() => {
+    setEmail({
+      ...email,
+      recipientEmail: toEmails,
+      cc: ccEmails.split(',').map((email) => email.trim()),
+      bcc: bccEmails.split(',').map((email) => email.trim()),
+      subject,
+      content
+    });
+  }, [toEmails, ccEmails, bccEmails, subject, content]);
+
+  const handleSendEmail = () => {
+    // TODO - send the composed message to the JMAP client
+    console.log('sent!');
+  }
+
+  const handleSaveDraft = () => {
+    // TODO - store the email in the drafts folder in the JMAP client
+    console.log('draft saved!');
+  }
 
   return (
     <Container>
@@ -67,11 +108,15 @@ export default function ComposeMail() {
               <Text>Add Action</Text>
             </Button>
 
-            <Button variant="soft">
+            <Button onClick={handleSaveDraft} variant="soft">
               <Text>Save Draft</Text>
             </Button>
 
-            <Button variant="solid">
+            <Button onClick={() => setCompose(false)} variant="soft" color="orange">
+              <Text>Discard</Text>
+            </Button>
+
+            <Button onClick={handleSendEmail} variant="solid">
               <Text>Send</Text>
             </Button>
           </Flex>

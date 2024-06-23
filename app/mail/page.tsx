@@ -193,7 +193,7 @@ export default function Basemail() {
           </ScrollArea>
 
           <Box id="mail-view" className="flex-grow">
-            {compose ? <ComposeMail /> : <MailView email={emails[activeEmailIndex]} />}
+            {compose ? <ComposeMail setCompose={setCompose} /> : <MailView email={emails[activeEmailIndex]} />}
           </Box>
         </Grid>
       </Box>
