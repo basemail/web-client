@@ -5,12 +5,12 @@ import { PaperPlaneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
 import { Grid, ScrollArea, Box, Text, TextField, Button, Flex, Avatar } from '@radix-ui/themes';
 import { useWindowSize } from '@uidotdev/usehooks';
 import Image from 'next/image';
-import MailRow from '@/components/MailDisplay/MailRow';
-import ComposeMail from '@/components/MailDisplay/ComposeMail';
-import MailView from '@/components/MailDisplay/MailView';
-import { useMailAuth } from '@/hooks/useMailAuth';
 import { useRouter } from 'next/navigation';
-import { Email, Folder } from '@/components/MailDisplay/MailTypes';
+import { useMailAuth } from '@/hooks/useMailAuth';
+import ComposeMail from 'app/mail/_components/ComposeMail';
+import MailRow from 'app/mail/_components/MailRow';
+import { Email, Folder } from 'app/mail/_components/MailTypes';
+import MailView from 'app/mail/_components/MailView';
 
 // Mock data
 
@@ -106,10 +106,11 @@ export default function Basemail() {
   // Track the selected folder
   const [activeFolderIndex, setActiveFolderIndex] = React.useState<number>(0);
   const [activeEmailIndex, setActiveEmailIndex] = React.useState<number>(0);
+  const [compose, setCompose] = React.useState<boolean>(false);
 
   const { width } = useWindowSize();
   const isSmall = width && width > 500;
-  console.log(width);
+  // console.log(width);
 
   const handleSelectFolder = (index: number) => {
     setActiveFolderIndex(index);
@@ -168,7 +169,7 @@ export default function Basemail() {
                 <MagnifyingGlassIcon height="16" width="16" />
               </TextField.Slot>
             </TextField.Root>
-            <Button m="2" variant="ghost" size="3" color="gray">
+            <Button m="2" variant="ghost" size="3" color="gray" onClick={() => setCompose(true)}>
               <Text>Compose</Text>
             </Button>
           </Flex>
@@ -189,7 +190,7 @@ export default function Basemail() {
           </ScrollArea>
 
           <Box id="mail-view" className="flex-grow">
-            <MailView email={emails[activeEmailIndex]} />
+            {compose ? <ComposeMail /> : <MailView email={emails[activeEmailIndex]} />}
           </Box>
         </Grid>
       </Box>

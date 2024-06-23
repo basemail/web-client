@@ -53,7 +53,7 @@ class MailAuthApi extends runtime.BaseAPI {
       );
     }
 
-    const queryParameters: unknown = {};
+    const queryParameters = {};
 
     const credentials = btoa(`${requestParameters.username}:${requestParameters.password}`);
 
@@ -69,7 +69,7 @@ class MailAuthApi extends runtime.BaseAPI {
 
     const response = await this.request(
       {
-        path: `/authorize/code`,
+        path: `/api/oauth`,
         method: 'POST',
         headers: headerParameters,
         query: queryParameters,
@@ -100,7 +100,7 @@ class MailAuthApi extends runtime.BaseAPI {
       );
     }
 
-    const queryParameters: unknown = {};
+    const queryParameters = {};
 
     const headerParameters: runtime.HTTPHeaders = {};
 
@@ -176,10 +176,10 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
   }, [getSIWEToken()]);
 
   // Create an auth api client
-  const authApi = new MailAuthApi({
-    ...runtime.DefaultConfig,
-    basePath: 'https://localhost:8080',
-  } as runtime.Configuration);
+  const config = new runtime.Configuration({
+    basePath: 'http://localhost:8080', // TODO update to use environment variable so it's configurable for deployment
+  });
+  const authApi = new MailAuthApi(config);
 
   async function signIn(accountId: string) {
     // 1. Get the SIWE token to use as the auth password

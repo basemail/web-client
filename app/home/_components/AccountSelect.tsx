@@ -1,4 +1,5 @@
 import { useState, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAccount, useReadContracts, useWriteContract } from 'wagmi';
 import Button from '@/components/Button/Button';
 import { useMailAuth } from '@/hooks/useMailAuth';
@@ -9,7 +10,8 @@ export function AccountSelect(): JSX.Element {
   const { address, isConnected } = useAccount();
   const contract = useBasemailAccountContract();
   const { data: callID, writeContract } = useWriteContract();
-  const { signIn, getAccessToken: getMailAccessToken } = useMailAuth();
+  const { signIn, getAccessToken: getMailAccessToken, isAuthenticated } = useMailAuth();
+  const router = useRouter();
 
   if (contract.status !== 'ready') {
     throw new Error('Contract not ready');
@@ -59,7 +61,11 @@ export function AccountSelect(): JSX.Element {
 
     console.log('Mail Access Token:', getMailAccessToken());
 
-    // TODO - Navigate to the app
+    if (isAuthenticated) {
+      router.push('/mail');
+    } else {
+      console.error('Failed to authenticate with the mail server');
+    }
   };
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account

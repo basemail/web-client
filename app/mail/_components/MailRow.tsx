@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Flex, Grid, Text, Button, Checkbox } from '@radix-ui/themes';
-import { Email } from '@/components/MailDisplay/MailTypes';
-import { AnyARecord } from 'dns';
+import { Email } from 'app/mail/_components/MailTypes';
 
 export default function MailRow({
   email,
@@ -11,7 +10,7 @@ export default function MailRow({
 }: {
   email: Email;
   selected: boolean;
-  handleSelectEmail: (e: any) => void;
+  handleSelectEmail: (e: unknown) => void;
   key: number;
 }) {
   return (
