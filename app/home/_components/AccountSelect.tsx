@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAccount, useReadContracts, useWriteContract } from 'wagmi';
 import Button from '@/components/Button/Button';
@@ -58,15 +58,13 @@ export function AccountSelect(): JSX.Element {
   const handleEnterApp = () => {
     // Sign in to the mail server using the account ID and SIWE token
     signIn(selectedAccount);
+  };
 
-    console.log('Mail Access Token:', getMailAccessToken());
-
+  useEffect(() => {  
     if (isAuthenticated) {
       router.push('/mail');
-    } else {
-      console.error('Failed to authenticate with the mail server');
     }
-  };
+  }, [selectedAccount, isAuthenticated]);
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (

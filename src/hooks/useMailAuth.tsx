@@ -11,18 +11,25 @@ type AuthCode = {
   isAdmin?: boolean;
 };
 
-function AuthCodeFromJSONTyped(json: unknown, ignoreDiscriminator: boolean): AuthCode {
+function AuthCodeFromJSONTyped(json: { data: {
+  code: string,
+  is_admin: boolean,
+}}, ignoreDiscriminator: boolean): AuthCode {
+  console.log(json);
   if (json == null) {
     return json;
   }
   return {
-    code: json.code == null ? undefined : json.code,
-    isAdmin: json.isAdmin == null ? undefined : json.isAdmin,
+    code: json.data.code == null ? undefined : json.data.code,
+    isAdmin: json.data.is_admin == null ? undefined : json.data.is_admin,
   };
 }
 
 function AuthCodeFromJSON(json: unknown): AuthCode {
-  return AuthCodeFromJSONTyped(json, false);
+  return AuthCodeFromJSONTyped(json as { data: {
+    code: string,
+    is_admin: boolean,
+  } }, false);
 }
 
 type AuthCodePostRequest = {
@@ -61,11 +68,11 @@ class MailAuthApi extends runtime.BaseAPI {
       Authorization: `Basic ${credentials}`,
     };
 
-    const body = {
-      client_id: 'basemail_web_client',
-      redirect_uri: 'https://basechain.email',
+    const body = JSON.stringify({
+      client_id: 'test_client',
+      redirect_uri: 'https://localhost:3000',
       type: 'Code',
-    };
+    });
 
     const response = await this.request(
       {
@@ -86,7 +93,7 @@ class MailAuthApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<AuthCode> {
     const response = await this.authCodePostRaw(requestParameters, initOverrides);
-    return response.value();
+    return await response.value();
   }
 
   async authTokenPostRaw(
@@ -105,8 +112,8 @@ class MailAuthApi extends runtime.BaseAPI {
     const headerParameters: runtime.HTTPHeaders = {};
 
     const body: FormData = new FormData();
-    body.append('client_id', 'basemail_web_client');
-    body.append('redirect_uri', 'https://basechain.email');
+    body.append('client_id', 'test_client');
+    body.append('redirect_uri', 'https://localhost:3000');
     body.append('grant_type', 'authorization_code');
     body.append('code', requestParameters.code);
 
@@ -129,7 +136,7 @@ class MailAuthApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<JWTPair> {
     const response = await this.authTokenPostRaw(requestParameters, initOverrides);
-    return response.value();
+    return await response.value();
   }
 }
 
@@ -182,6 +189,8 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
   const authApi = new MailAuthApi(config);
 
   async function signIn(accountId: string) {
+    setIsLoading(true);
+
     // 1. Get the SIWE token to use as the auth password
     const siweToken = getSIWEToken();
 

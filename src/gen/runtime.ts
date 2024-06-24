@@ -141,6 +141,7 @@ export class BaseAPI {
   ): Promise<Response> {
     const { url, init } = await this.createFetchParams(context, initOverrides);
     const response = await this.fetchApi(url, init);
+    console.log(response);
     if (response && response.status >= 200 && response.status < 300) {
       return response;
     }

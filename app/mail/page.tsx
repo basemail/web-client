@@ -80,11 +80,10 @@ const mockEmail2: Email = {
 // Component
 
 export default function Basemail() {
-  // const { isAuthenticated, accountId } = useMailAuth(); Not currently working due to CB wallet issue
-  const isAuthenticated = true;
-  const accountId = '5';
+  const { isAuthenticated, accountId } = useMailAuth();
+  console.log(accountId);
   const username = 'loki@basechain.email'; // TODO - Fetch username from the server
-  // const { client: mailClient } = useMail();
+  const mail = useMail();
 
   const router = useRouter();
 
@@ -126,6 +125,10 @@ export default function Basemail() {
 
     // TODO other actions?
   };
+
+  // Load emails for the account
+  const { data: mailboxes } = mail.mailboxes;
+  console.log(mailboxes);
 
   return (
     <Grid

@@ -1,9 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import JamClient from 'jmap-jam';
+import JamClient, { Mailbox } from 'jmap-jam';
+import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import { useMailAuth } from './useMailAuth';
 
 type MailContextState = {
-    client: JamClient | undefined;
+    mailboxes: UseQueryResult<readonly Mailbox[], Error>;
 };
 
 
@@ -16,7 +17,7 @@ export const useMail = () => {
 
 export function MailProvider({ children }: { children: React.ReactNode }) {
 
-    const { getAccessToken } = useMailAuth();
+    const { getAccessToken, accountId } = useMailAuth();
     const [client, setClient] = useState<JamClient | undefined>(undefined);
 
     const accessToken = getAccessToken();
@@ -27,14 +28,77 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
                 bearerToken: accessToken,
                 sessionUrl: 'http://localhost:8080/.well-known/jmap', // TODO set from environment variable
             });
+
             setClient(newClient);
         } else {
             setClient(undefined);
         }
     }, [accessToken]);
 
+    // Queries
+
+    const getMailboxes = async (): Promise<readonly Mailbox[]> => {
+        try {
+            const result = await client?.api.Mailbox.get({ accountId: (accountId ?? '') });
+            const [data] = result ?? [];
+            return data?.list ?? [];
+        } catch (error) {
+            console.error(error);
+            return [];
+        }
+    };
+
+    const mailboxes = useQuery<readonly Mailbox[]>({ queryKey: ['mailboxes'], queryFn: getMailboxes});
+
+    // Updates
+    
+    // If the user has no mailboxes, initialize the standard set
+    const initializeMailboxes = async () => {
+        try {
+            await client?.api.Mailbox.set({ 
+                accountId: (accountId ?? ''), 
+                create: {
+                    "0": { 
+                        name: "Inbox", 
+                        id: "0",
+                        parentId: null, 
+                        role: "inbox", 
+                        sortOrder: 0, 
+                        totalEmails: 0, 
+                        unreadEmails: 0, 
+                        totalThreads: 0, 
+                        unreadThreads: 0,
+                        iSubscribed: true, 
+                        myRights: { 
+                            mayAddItems: true, 
+                            mayCreateChild: true, 
+                            mayDelete: false,
+                            mayReadItems: true,
+                            mayRemoveItems: true,
+                            mayRename: false,
+                            maySetKeywords: true,
+                            maySetSeen: true,
+                            maySubmit: false
+                        }
+                    },
+                },
+                ifInState: null,
+                update: null,
+                destroy: null,
+            });
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    useEffect(() => {
+        if (mailboxes.data && mailboxes.data.length === 0) {
+            initializeMailboxes();
+        }
+    }, [mailboxes.data]);
+
     return (
-        <MailContext.Provider value={{ client }}>
+        <MailContext.Provider value={{ mailboxes }}>
             {children}
         </MailContext.Provider>
     );
