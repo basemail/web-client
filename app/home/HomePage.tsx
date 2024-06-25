@@ -1,7 +1,6 @@
 'use client';
 import { useAccount } from 'wagmi';
 import Button from '@/components/Button/Button';
-import Footer from '@/components/layout/footer/Footer';
 import AccountConnect from '@/components/layout/header/AccountConnect';
 import Header from '@/components/layout/header/Header';
 import { useSIWE } from '@/hooks/useSIWE';

@@ -2,6 +2,7 @@ import { GitHubLogoIcon } from '@radix-ui/react-icons';
 // import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { clsx } from 'clsx';
 import NextLink from 'next/link';
+import Image from 'next/image';
 import AccountConnect from './AccountConnect';
 // import { Experiences } from './Experiences';
 
@@ -32,8 +33,8 @@ export function NavbarTitle() {
   return (
     <div className="flex h-8 items-center justify-start gap-4">
       <NextLink href="/" passHref className="relative h-8 w-8" aria-label="Home page">
-        <div className="absolute size-8 rounded-full bg-white" />
-        {/* <Image src="/icons/modified_logo.png" width={32} height={32} alt="logo" /> */}
+        {/* <div className="absolute size-8 rounded-full bg-white" /> */}
+        <Image src="/icons/favicon-32x32.png" width={32} height={32} alt="logo" />
       </NextLink>
       <NextLink
         href="/"

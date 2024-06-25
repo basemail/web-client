@@ -80,7 +80,7 @@ class MailAuthApi extends runtime.BaseAPI {
 
     const body = JSON.stringify({
       client_id: 'test_client',
-      redirect_uri: 'https://basechain.email',
+      redirect_uri: 'https://www.basechain.email',
       type: 'Code',
     });
 
@@ -123,7 +123,7 @@ class MailAuthApi extends runtime.BaseAPI {
 
     const body: FormData = new FormData();
     body.append('client_id', 'test_client');
-    body.append('redirect_uri', 'https://basechain.email');
+    body.append('redirect_uri', 'https://www.basechain.email');
     body.append('grant_type', 'authorization_code');
     body.append('code', requestParameters.code);
 
