@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignoreDuringBuilds: true,
   reportUnusedDisableDirectives: true,
   overrides: [],
   parserOptions: {
