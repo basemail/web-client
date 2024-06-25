@@ -1,5 +1,5 @@
 import React from 'react';
-import { Container, Grid, Box, Flex, Text, Checkbox } from '@radix-ui/themes';
+import { Container, Box, Flex, Text } from '@radix-ui/themes';
 import { Email } from 'app/mail/_components/MailTypes';
 
 export default function MailView({ email }: { email: Email }) {

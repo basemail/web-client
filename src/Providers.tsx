@@ -9,8 +9,8 @@ import { baseSepolia } from 'viem/chains';
 import { WagmiProvider } from 'wagmi';
 import { SIWEProvider } from '@/hooks/useSIWE';
 import { createWagmiConfig } from '@/store/createWagmiConfig';
-import { MailAuthProvider } from './hooks/useMailAuth';
 import { MailProvider } from './hooks/useMail';
+import { MailAuthProvider } from './hooks/useMailAuth';
 // TODO control with environment variables
 
 type Props = { children: ReactNode };

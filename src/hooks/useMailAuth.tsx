@@ -11,10 +11,15 @@ type AuthCode = {
   isAdmin?: boolean;
 };
 
-function AuthCodeFromJSONTyped(json: { data: {
-  code: string,
-  is_admin: boolean,
-}}, ignoreDiscriminator: boolean): AuthCode {
+function AuthCodeFromJSONTyped(
+  json: {
+    data: {
+      code: string;
+      is_admin: boolean;
+    };
+  },
+  ignoreDiscriminator: boolean,
+): AuthCode {
   console.log(json);
   if (json == null) {
     return json;
@@ -26,10 +31,15 @@ function AuthCodeFromJSONTyped(json: { data: {
 }
 
 function AuthCodeFromJSON(json: unknown): AuthCode {
-  return AuthCodeFromJSONTyped(json as { data: {
-    code: string,
-    is_admin: boolean,
-  } }, false);
+  return AuthCodeFromJSONTyped(
+    json as {
+      data: {
+        code: string;
+        is_admin: boolean;
+      };
+    },
+    false,
+  );
 }
 
 type AuthCodePostRequest = {
@@ -93,7 +103,7 @@ class MailAuthApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<AuthCode> {
     const response = await this.authCodePostRaw(requestParameters, initOverrides);
-    return await response.value();
+    return response.value();
   }
 
   async authTokenPostRaw(
@@ -136,7 +146,7 @@ class MailAuthApi extends runtime.BaseAPI {
     initOverrides?: RequestInit | runtime.InitOverrideFunction,
   ): Promise<JWTPair> {
     const response = await this.authTokenPostRaw(requestParameters, initOverrides);
-    return await response.value();
+    return response.value();
   }
 }
 

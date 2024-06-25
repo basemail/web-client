@@ -10,7 +10,7 @@ export function AccountSelect(): JSX.Element {
   const { address, isConnected } = useAccount();
   const contract = useBasemailAccountContract();
   const { data: callID, writeContract } = useWriteContract();
-  const { signIn, getAccessToken: getMailAccessToken, isAuthenticated } = useMailAuth();
+  const { signIn, isAuthenticated } = useMailAuth();
   const router = useRouter();
 
   if (contract.status !== 'ready') {
@@ -39,8 +39,8 @@ export function AccountSelect(): JSX.Element {
   const [{ result: accountIds }, { result: usernames }] = data ?? [{ result: [] }, { result: [] }];
 
   const accounts = Array.from({ length: accountIds?.length ?? 0 }, (_, i) => ({
-    id: accountIds ? accountIds[i].toString() : "",
-    username: usernames ? usernames[i].toString() : "",
+    id: accountIds ? accountIds[i].toString() : '',
+    username: usernames ? usernames[i].toString() : '',
   }));
 
   const [username, setUsername] = useState<string>('');
@@ -60,11 +60,11 @@ export function AccountSelect(): JSX.Element {
     signIn(selectedAccount);
   };
 
-  useEffect(() => {  
+  useEffect(() => {
     if (isAuthenticated) {
       router.push('/mail');
     }
-  }, [selectedAccount, isAuthenticated]);
+  }, [router, selectedAccount, isAuthenticated]);
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (
@@ -75,9 +75,9 @@ export function AccountSelect(): JSX.Element {
         value={selectedAccount}
       >
         {(accounts?.length ?? 0) > 0 &&
-          accounts?.map(({ id, username }) => (
+          accounts?.map(({ id, username: uname }) => (
             <option key={id} value={id}>
-              {username}@basechain.email
+              {uname}@basechain.email
             </option>
           ))}
         <option value="new">Create New Account</option>

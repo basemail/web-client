@@ -1,9 +1,9 @@
-import { ChevronDownIcon, GitHubLogoIcon } from '@radix-ui/react-icons';
-import * as NavigationMenu from '@radix-ui/react-navigation-menu';
+import { GitHubLogoIcon } from '@radix-ui/react-icons';
+// import * as NavigationMenu from '@radix-ui/react-navigation-menu';
 import { clsx } from 'clsx';
 import NextLink from 'next/link';
 import AccountConnect from './AccountConnect';
-import { Experiences } from './Experiences';
+// import { Experiences } from './Experiences';
 
 export function NavbarLink({
   href,

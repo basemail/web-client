@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { Container, Button, Box, Flex, Text, TextField, TextArea } from '@radix-ui/themes';
+// import { useMailAuth } from '@/hooks/useMailAuth';
 import { Email } from 'app/mail/_components/MailTypes';
-import { useMailAuth } from '@/hooks/useMailAuth';
 
-export default function ComposeMail({ setCompose }: { setCompose: (compose: boolean) => void }){
+export default function ComposeMail({ setCompose }: { setCompose: (compose: boolean) => void }) {
   // const { accountId } = useMailAuth();
   // TODO get username and user email from the JMAP client
 
@@ -26,29 +26,29 @@ export default function ComposeMail({ setCompose }: { setCompose: (compose: bool
     isRead: false,
     priority: 'Normal',
     replyTo: '',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
   });
 
   useEffect(() => {
     setEmail({
       ...email,
       recipientEmail: toEmails,
-      cc: ccEmails.split(',').map((email) => email.trim()),
-      bcc: bccEmails.split(',').map((email) => email.trim()),
+      cc: ccEmails.split(',').map((m) => m.trim()),
+      bcc: bccEmails.split(',').map((m) => m.trim()),
       subject,
-      content
+      content,
     });
   }, [toEmails, ccEmails, bccEmails, subject, content]);
 
   const handleSendEmail = () => {
     // TODO - send the composed message to the JMAP client
     console.log('sent!');
-  }
+  };
 
   const handleSaveDraft = () => {
     // TODO - store the email in the drafts folder in the JMAP client
     console.log('draft saved!');
-  }
+  };
 
   return (
     <Container>

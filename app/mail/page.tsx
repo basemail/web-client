@@ -2,12 +2,12 @@
 import React from 'react';
 import { InboxSolid, ArchiveBox, Trash, FolderOpen } from '@medusajs/icons';
 import { PaperPlaneIcon, MagnifyingGlassIcon } from '@radix-ui/react-icons';
-import { Grid, ScrollArea, Box, Text, TextField, Button, Flex, Avatar } from '@radix-ui/themes';
+import { Grid, ScrollArea, Box, Text, TextField, Button, Flex } from '@radix-ui/themes';
 import { useWindowSize } from '@uidotdev/usehooks';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
-import { useMailAuth } from '@/hooks/useMailAuth';
 import { useMail } from '@/hooks/useMail';
+import { useMailAuth } from '@/hooks/useMailAuth';
 import ComposeMail from 'app/mail/_components/ComposeMail';
 import MailRow from 'app/mail/_components/MailRow';
 import { Email, Folder } from 'app/mail/_components/MailTypes';
@@ -91,7 +91,6 @@ export default function Basemail() {
   if (!isAuthenticated) {
     router.push('/');
   }
-
 
   let emails = Array.from({ length: 10 }).map((_, index) => ({
     ...mockEmail,
@@ -196,7 +195,11 @@ export default function Basemail() {
           </ScrollArea>
 
           <Box id="mail-view" className="flex-grow">
-            {compose ? <ComposeMail setCompose={setCompose} /> : <MailView email={emails[activeEmailIndex]} />}
+            {compose ? (
+              <ComposeMail setCompose={setCompose} />
+            ) : (
+              <MailView email={emails[activeEmailIndex]} />
+            )}
           </Box>
         </Grid>
       </Box>
