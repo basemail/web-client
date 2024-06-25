@@ -4,8 +4,8 @@ import { Email } from 'app/mail/_components/MailTypes';
 import { useMailAuth } from '@/hooks/useMailAuth';
 
 export default function ComposeMail({ setCompose }: { setCompose: (compose: boolean) => void }){
-  const { username, useremail, accountId } = useMailAuth();
-
+  // const { accountId } = useMailAuth();
+  // TODO get username and user email from the JMAP client
 
   const [toEmails, setToEmails] = React.useState<string>('');
   const [ccEmails, setCcEmails] = React.useState<string>('');
@@ -14,8 +14,8 @@ export default function ComposeMail({ setCompose }: { setCompose: (compose: bool
   const [content, setContent] = React.useState<string>('');
 
   const [email, setEmail] = React.useState<Email>({
-    senderEmail: useremail as string,
-    senderName: username as string,
+    senderEmail: '',
+    senderName: '',
     senderAvatar: '',
     recipientEmail: '',
     cc: [] as string[],

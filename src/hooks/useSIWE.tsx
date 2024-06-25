@@ -9,7 +9,7 @@ type SIWEContextState = {
   isLoading: boolean;
   isAuthenticated: boolean;
   signIn: () => void;
-  getAccessToken: () => string | null;
+  getAccessToken: () => string | undefined;
 };
 
 const initialState = {} as SIWEContextState;
@@ -51,9 +51,8 @@ export function SIWEProvider({ children }: { children: React.ReactNode }) {
   const { signMessageAsync } = useSignMessage();
 
   async function signAuthMessage(): Promise<{ message: string; signature: string }> {
-    // TODO change this to the actual domain and origin once we have real deployments
-    const domain = 'basechain.email'; //window.location.host;
-    const origin = 'https://basechain.email'; //window.location.origin;
+    const domain = window.location.host;
+    const origin = window.location.origin;
     const statement = `You must login with your Smart Wallet to authenticate with the offchain mail service.`;
 
     // 1. Get a nonce from the api

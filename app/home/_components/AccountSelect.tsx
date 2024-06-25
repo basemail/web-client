@@ -38,9 +38,9 @@ export function AccountSelect(): JSX.Element {
 
   const [{ result: accountIds }, { result: usernames }] = data ?? [{ result: [] }, { result: [] }];
 
-  const accounts = Array.from({ length: accountIds.length }, (_, i) => ({
-    id: accountIds[i].toString(),
-    username: usernames[i].toString(),
+  const accounts = Array.from({ length: accountIds?.length ?? 0 }, (_, i) => ({
+    id: accountIds ? accountIds[i].toString() : "",
+    username: usernames ? usernames[i].toString() : "",
   }));
 
   const [username, setUsername] = useState<string>('');
