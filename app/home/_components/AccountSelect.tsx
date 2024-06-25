@@ -1,6 +1,8 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
+import { useRouter } from 'next/navigation';
 import { useAccount, useReadContracts, useWriteContract } from 'wagmi';
 import Button from '@/components/Button/Button';
+import { useMailAuth } from '@/hooks/useMailAuth';
 import { useBasemailAccountContract } from '../_contracts/useBasemailAccountContract';
 import { CallStatus } from './CallStatus';
 
@@ -8,6 +10,8 @@ export function AccountSelect(): JSX.Element {
   const { address, isConnected } = useAccount();
   const contract = useBasemailAccountContract();
   const { data: callID, writeContract } = useWriteContract();
+  const { signIn, isAuthenticated } = useMailAuth();
+  const router = useRouter();
 
   if (contract.status !== 'ready') {
     throw new Error('Contract not ready');
@@ -34,9 +38,9 @@ export function AccountSelect(): JSX.Element {
 
   const [{ result: accountIds }, { result: usernames }] = data ?? [{ result: [] }, { result: [] }];
 
-  const accounts = Array.from({ length: accountIds.length }, (_, i) => ({
-    id: accountIds[i].toString(),
-    username: usernames[i].toString(),
+  const accounts = Array.from({ length: accountIds?.length ?? 0 }, (_, i) => ({
+    id: accountIds ? accountIds[i].toString() : '',
+    username: usernames ? usernames[i].toString() : '',
   }));
 
   const [username, setUsername] = useState<string>('');
@@ -52,18 +56,28 @@ export function AccountSelect(): JSX.Element {
   }, [contract, address, username, writeContract]);
 
   const handleEnterApp = () => {
-    // TODO send Basic auth credentials to mail-server, set mailAccessToken and mailRefreshToken in session storage, and redirect to /mail
-    
-  }
+    // Sign in to the mail server using the account ID and SIWE token
+    signIn(selectedAccount);
+  };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/mail');
+    }
+  }, [router, selectedAccount, isAuthenticated]);
 
   // TODO show loading state before the accounts are fetched instead of defaulting to create new account
   return (
     <div className="w-48 text-center">
-      <select className="my-4 text-lg" onChange={(e) => setSelectedAccount(e.target.value)} value={selectedAccount}>
+      <select
+        className="my-4 text-lg"
+        onChange={(e) => setSelectedAccount(e.target.value)}
+        value={selectedAccount}
+      >
         {(accounts?.length ?? 0) > 0 &&
-          accounts?.map(({ id, username }) => (
+          accounts?.map(({ id, username: uname }) => (
             <option key={id} value={id}>
-              {username}@basechain.email
+              {uname}@basechain.email
             </option>
           ))}
         <option value="new">Create New Account</option>
