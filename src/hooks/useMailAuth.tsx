@@ -184,7 +184,7 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
 
   // Create an auth api client
   const config = new runtime.Configuration({
-    basePath: 'http://localhost:8080', // TODO update to use environment variable so it's configurable for deployment
+    basePath: process.env.AUTH_API_URL, // TODO update to use environment variable so it's configurable for deployment
   });
   const authApi = new MailAuthApi(config);
 

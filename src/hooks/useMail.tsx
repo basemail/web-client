@@ -26,7 +26,7 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
         if (accessToken) {
             const newClient = new JamClient({
                 bearerToken: accessToken,
-                sessionUrl: 'http://localhost:8080/.well-known/jmap', // TODO set from environment variable
+                sessionUrl: process.env.MAIL_SERVER_URL + '/.well-known/jmap', // TODO set from environment variable
             });
 
             setClient(newClient);
