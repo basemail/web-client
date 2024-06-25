@@ -57,7 +57,7 @@ export default function HomePage() {
           </div>
         )}
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 }

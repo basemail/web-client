@@ -80,7 +80,7 @@ class MailAuthApi extends runtime.BaseAPI {
 
     const body = JSON.stringify({
       client_id: 'test_client',
-      redirect_uri: 'https://localhost:3000',
+      redirect_uri: 'https://basechain.email',
       type: 'Code',
     });
 
@@ -123,7 +123,7 @@ class MailAuthApi extends runtime.BaseAPI {
 
     const body: FormData = new FormData();
     body.append('client_id', 'test_client');
-    body.append('redirect_uri', 'https://localhost:3000');
+    body.append('redirect_uri', 'https://basechain.email');
     body.append('grant_type', 'authorization_code');
     body.append('code', requestParameters.code);
 
@@ -194,7 +194,7 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
 
   // Create an auth api client
   const config = new runtime.Configuration({
-    basePath: process.env.AUTH_API_URL, // TODO update to use environment variable so it's configurable for deployment
+    basePath: process.env.MAIL_SERVER_URL ?? '',
   });
   const authApi = new MailAuthApi(config);
 

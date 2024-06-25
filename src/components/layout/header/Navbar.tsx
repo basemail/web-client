@@ -33,6 +33,7 @@ export function NavbarTitle() {
     <div className="flex h-8 items-center justify-start gap-4">
       <NextLink href="/" passHref className="relative h-8 w-8" aria-label="Home page">
         <div className="absolute size-8 rounded-full bg-white" />
+        {/* <Image src="/icons/modified_logo.png" width={32} height={32} alt="logo" /> */}
       </NextLink>
       <NextLink
         href="/"
@@ -63,13 +64,13 @@ function Navbar() {
                 <GitHubLogoIcon
                   width="24"
                   height="24"
-                  aria-label="build-onchain-apps Github respository"
+                  aria-label="Basemail Github respository"
                 />
               </NavbarLink>
             </li>
-            <li className="flex">
+            {/* <li className="flex">
               <NavbarLink href="/#get-started">Docs</NavbarLink>
-            </li>
+            </li> */}
             {/* <li className="flex">
               <NavigationMenu.Root className="relative">
                 <NavigationMenu.List className={clsx('flex flex-row space-x-2')}>
