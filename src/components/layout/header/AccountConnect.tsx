@@ -3,6 +3,7 @@ import { baseSepolia } from 'viem/chains';
 import { useAccount, useChainId, useConnect, useDisconnect } from 'wagmi';
 import { AccountDropdown } from './AccountDropdown';
 import { AccountInfoPanel } from './AccountInfoPanel';
+import { useEffect, useState } from 'react';
 
 /**
  * AccountConnect
@@ -15,6 +16,16 @@ function AccountConnect() {
   const { status } = useConnect();
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
+
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return (
     <div
