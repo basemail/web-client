@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useEffect, useState, useMemo } from 'react';
 import { UseQueryResult, useQuery } from '@tanstack/react-query';
 import JamClient, { Mailbox } from 'jmap-jam';
 import { useMailAuth } from './useMailAuth';
@@ -20,8 +20,9 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
 
   const accessToken = getAccessToken();
 
-  useEffect(() => {
+  useMemo(() => {
     if (accessToken) {
+      console.log('setting client with:', accessToken);
       const newClient = new JamClient({
         bearerToken: accessToken,
         sessionUrl: (process.env.NEXT_PUBLIC_MAIL_SERVER_URL ?? '') + '/.well-known/jmap', // TODO set from environment variable
@@ -38,6 +39,7 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
   const getMailboxes = async (): Promise<readonly Mailbox[]> => {
     try {
       const result = await client?.api.Mailbox.get({ accountId: accountId ?? '' });
+      console.log({ result_from_getMailboxes: result, accountId});
       const [data] = result ?? [];
       return data?.list ?? [];
     } catch (error) {
@@ -47,7 +49,7 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
   };
 
   const mailboxes = useQuery<readonly Mailbox[]>({
-    queryKey: ['mailboxes'],
+    queryKey: ['mailboxes', accessToken, accountId],
     queryFn: getMailboxes,
   });
 
@@ -56,6 +58,7 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
   // If the user has no mailboxes, initialize the standard set
   const initializeMailboxes = async () => {
     try {
+      console.log('initializing mailboxes with:', accountId, client?.api.Mailbox.set);
       await client?.api.Mailbox.set({
         accountId: accountId ?? '',
         create: {
@@ -93,10 +96,11 @@ export function MailProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
+    console.log({ mailboxes_effect: mailboxes.data });
     if (mailboxes.data && mailboxes.data.length === 0) {
       initializeMailboxes().catch((error) => console.error(error));
     }
-  }, [mailboxes.data]);
+  }, [mailboxes.data, accountId]);
 
   return <MailContext.Provider value={{ mailboxes }}>{children}</MailContext.Provider>;
 }
