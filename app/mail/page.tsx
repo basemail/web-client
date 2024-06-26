@@ -127,7 +127,7 @@ export default function Basemail() {
 
   // Load emails for the account
   const { data: mailboxes } = mail.mailboxes;
-  console.log(mailboxes);
+  console.log({ mailboxes });
 
   return (
     <Grid

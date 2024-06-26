@@ -32,7 +32,7 @@ services:
       - mongo
     restart: unless-stopped
     ports:
-      - '8081:8081'
+      - 8081:8081
     environment:
       ENVIRONMENT: local
       JWT_SECRET: ${JWT_SECRET?set JWT_SECRET in your .env file}
@@ -43,6 +43,13 @@ services:
     image: ghcr.io/basemail/mail-server:latest
     network_mode: 'host'
     restart: unless-stopped
+    environment:
+      AUTH_API_URL: http://localhost:8081
+      CHAIN_ID: 84532
+      RPC_URL: ${RPC_URL}
+      BASEMAIL_ADDRESS: 0xBdB578684B46ef9FdB669A49c2d19E2F96d7920F
+    ports:
+      - 8080:8080
     depends_on:
       - auth-server
 

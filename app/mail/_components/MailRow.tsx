@@ -6,12 +6,10 @@ export default function MailRow({
   email,
   selected,
   handleSelectEmail,
-  key,
 }: {
   email: Email;
   selected: boolean;
   handleSelectEmail: (e: unknown) => void;
-  key: number;
 }) {
   return (
     <Flex
@@ -23,7 +21,6 @@ export default function MailRow({
       align="start"
       className="border-b border-zinc-700 hover:bg-zinc-800"
       style={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
-      key={key}
     >
       <Grid width="394px" columns="2" rows="1">
         <Flex direction="row" align="center">
