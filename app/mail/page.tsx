@@ -140,7 +140,7 @@ export default function Basemail() {
       {isSmall && (
         <Box id="sidebar" p="4">
           <Flex align="center" gap="3" p="4" className="hover:cursor-pointer">
-            <Image src="/icons/modified_logo.png" width={32} height={32} alt="logo" />
+            <Image src="/icons/favicon-32x32.png" width={32} height={32} alt="logo" />
             <Button variant="ghost" color="gray" onClick={() => router.push('/')}>
               <Text size="6">BASEMAIL</Text>
             </Button>
