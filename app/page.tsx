@@ -1,5 +1,5 @@
 import { generateMetadata } from '@/utils/generateMetadata';
-import HomePage from './home/HomePage';
+import HomePage from './home/page';
 
 export const metadata = generateMetadata({
   title: 'Basemail',

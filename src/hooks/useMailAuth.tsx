@@ -194,7 +194,7 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
 
   // Create an auth api client
   const config = new runtime.Configuration({
-    basePath: process.env.MAIL_SERVER_URL ?? '',
+    basePath: process.env.NEXT_PUBLIC_MAIL_SERVER_URL ?? '',
   });
   const authApi = new MailAuthApi(config);
 
