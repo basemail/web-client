@@ -12,8 +12,6 @@ export function createWagmiConfig(rpcUrl: string, projectId?: string) {
   const baseUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base/');
   const baseSepoliaUrl = rpcUrl.replace(/\/v1\/(.+?)\//, '/v1/base-sepolia/');
 
-  console.log('rpcUrl:', rpcUrl);
-
   return createConfig({
     chains: [baseSepolia, base],
     connectors: [
