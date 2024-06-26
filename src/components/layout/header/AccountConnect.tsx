@@ -13,7 +13,7 @@ import { useEffect, useState } from 'react';
  */
 function AccountConnect() {
   const account = useAccount();
-  const { status } = useConnect();
+  const { status, connectors } = useConnect();
   const { disconnect } = useDisconnect();
   const chainId = useChainId();
 
@@ -26,6 +26,8 @@ function AccountConnect() {
   if (!isClient) {
     return null;
   }
+
+  console.log(connectors[0].getProvider());
 
   return (
     <div
