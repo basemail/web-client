@@ -27,8 +27,6 @@ function AccountConnect() {
     return null;
   }
 
-  console.log(connectors[0].getProvider());
-
   return (
     <div
       className="flex flex-grow"

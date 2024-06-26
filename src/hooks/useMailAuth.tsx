@@ -20,7 +20,6 @@ function AuthCodeFromJSONTyped(
   },
   ignoreDiscriminator: boolean,
 ): AuthCode {
-  console.log(json);
   if (json == null) {
     return json;
   }
@@ -194,7 +193,7 @@ export function MailAuthProvider({ children }: { children: React.ReactNode }) {
 
   // Create an auth api client
   const config = new runtime.Configuration({
-    basePath: process.env.NEXT_PUBLIC_MAIL_SERVER_URL ?? '',
+    basePath: '/api/auth',
   });
   const authApi = new MailAuthApi(config);
 
